@@ -39,7 +39,7 @@
     ]
   },
   "devDependencies": {
-    "firebase-tools": "^7.0.1",
+    "firebase-tools": "7.0.1",
     "prettier": "1.18.2"
   }
 }
