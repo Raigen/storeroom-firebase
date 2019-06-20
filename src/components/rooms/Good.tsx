@@ -1,7 +1,7 @@
 import React from 'react'
-import { useDocumentData } from 'react-firebase-hooks/firestore'
-import firebase from 'firebase'
 import { RoomGoodType } from './GoodsList'
+import { firestore } from '../firebase/firebase'
+import { useDocumentData } from 'react-firebase-hooks/firestore'
 
 type GoodType = {
   _id: string
@@ -12,7 +12,7 @@ type GoodType = {
 type GoodListEntryProps = { goodData: RoomGoodType }
 
 export const GoodListEntry: React.FC<GoodListEntryProps> = ({ goodData }) => {
-  const [good, loading, error] = useDocumentData<GoodType>(firebase.firestore().doc(`/goods/${goodData.ref.id}`), {
+  const [good, loading, error] = useDocumentData<GoodType>(firestore.doc(`/goods/${goodData.ref.id}`), {
     idField: '_id'
   })
   if (error) return <li>{error.message}</li>

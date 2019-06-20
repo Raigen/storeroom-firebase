@@ -1,7 +1,7 @@
 import React from 'react'
-import { useCollectionData } from 'react-firebase-hooks/firestore'
-import firebase from 'firebase'
+import { firestore } from '../firebase/firebase'
 import { GoodListEntry } from './Good'
+import { useCollectionData } from 'react-firebase-hooks/firestore'
 
 export type RoomGoodType = {
   _id: string
@@ -10,16 +10,13 @@ export type RoomGoodType = {
 }
 
 type GoodsListProps = {
-  roomId: string
+  path: string
 }
 
-export const GoodsList: React.FC<GoodsListProps> = ({ roomId }) => {
-  const [goods, loading, error] = useCollectionData<RoomGoodType>(
-    firebase.firestore().collection(`/rooms/${roomId}/goods`),
-    {
-      idField: '_id'
-    }
-  )
+export const GoodsList: React.FC<GoodsListProps> = ({ path }) => {
+  const [goods, loading, error] = useCollectionData<RoomGoodType>(firestore.collection(`${path}/goods`), {
+    idField: '_id'
+  })
   if (error) return <div>{error.message}</div>
   if (loading || !goods) return null
   return (

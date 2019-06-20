@@ -5,16 +5,20 @@ import { ROOM, ROOMLIST } from '../../constants/routes'
 import { Room, RoomType } from './Room'
 
 import React from 'react'
-import firebase from 'firebase'
+import { firestore } from '../firebase/firebase'
+import { useFirebaseUser } from '../firebase/hooks'
 
 type RoomListProps = RouteComponentProps & {}
 
 export const RoomsList: React.FC<RoomListProps> = ({ match }) => {
-  const [rooms, loading, error] = firebaseHooks.useCollectionData<RoomType>(firebase.firestore().collection('rooms'), {
+  const user = useFirebaseUser()
+  const collectionPath = user ? `users/${user!.uid}/rooms` : 'null'
+  const [rooms, loading, error] = firebaseHooks.useCollectionData<RoomType>(firestore.collection(collectionPath), {
     idField: '_id'
   })
 
-  if (error) return <div>{error.message}</div>
+  if (!user) return null
+  if (error) return <div>Fehler: {error.message}</div>
   if (loading || !rooms || rooms.length === 0) return <div />
   return (
     <>
