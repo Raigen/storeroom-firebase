@@ -23,6 +23,7 @@ action "Build hosting" {
   needs = ["Run tests"]
   args = "build"
   runs = "yarn"
+  secrets = ["REACT_APP_API_KEY", "REACT_APP_AUTH_DOMAIN", "REACT_APP_DATABASE_URL", "REACT_APP_PROJECT_ID", "REACT_APP_STORAGE_BUCKET", "REACT_APP_MESSAGING_SENDER_ID"]
 }
 
 action "Deploy only on master" {
@@ -34,6 +35,6 @@ action "Deploy only on master" {
 action "Deploy hosting to firebase" {
   uses = "w9jds/firebase-action@7d6b2b058813e1224cdd4db255b2f163ae4084d3"
   needs = ["Deploy only on master"]
-  secrets = ["FIREBASE_TOKEN"]
   args = "deploy --only hosting"
+  secrets = ["FIREBASE_TOKEN"]
 }
