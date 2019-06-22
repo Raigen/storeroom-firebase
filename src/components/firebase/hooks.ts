@@ -11,9 +11,11 @@ export const useFirebaseUser = () => {
       setUser(user)
       if (!user) {
         router.history.push(SIGN_IN)
+        // } else {
+        //   router.history.push(ROOMLIST)
       }
     })
     return () => unregisterAuthObserver()
-  }, [])
+  }, [router.history])
   return user
 }

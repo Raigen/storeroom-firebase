@@ -2,6 +2,7 @@ import React from 'react'
 import { RoomGoodType } from './GoodsList'
 import { firestore } from '../firebase/firebase'
 import { useDocumentData } from 'react-firebase-hooks/firestore'
+import Typography from '@material-ui/core/Typography'
 
 type GoodType = {
   _id: string
@@ -18,9 +19,9 @@ export const GoodListEntry: React.FC<GoodListEntryProps> = ({ goodData }) => {
   if (error) return <li>{error.message}</li>
   if (loading || !good) return null
   return (
-    <>
+    <Typography>
       {good.name} - {goodData.amount}
       {good.unit}
-    </>
+    </Typography>
   )
 }
