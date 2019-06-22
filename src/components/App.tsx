@@ -1,13 +1,12 @@
 import { LANDING, ROOMLIST, SIGN_IN } from '../constants/routes'
 import { Route, BrowserRouter as Router } from 'react-router-dom'
-import { createStyles, makeStyles } from '@material-ui/styles'
+import { Theme, createStyles, makeStyles } from '@material-ui/core/styles'
 
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { Navigation } from './Navigation'
 import React from 'react'
 import { RoomsList } from './rooms/RoomList'
 import { SignIn } from './auth/SignIn'
-import { Theme } from '@material-ui/core'
 import { Topbar } from './Topbar'
 import Typography from '@material-ui/core/Typography'
 

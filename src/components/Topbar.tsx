@@ -1,6 +1,5 @@
-import { createStyles, makeStyles } from '@material-ui/styles'
+import { Theme, createStyles, makeStyles } from '@material-ui/core/styles'
 
-import { Theme } from '@material-ui/core'
 import AppBar from '@material-ui/core/AppBar'
 import Button from '@material-ui/core/Button'
 import React from 'react'

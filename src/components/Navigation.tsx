@@ -1,8 +1,7 @@
 import { LANDING, ROOMLIST, SIGN_IN, SIGN_UP } from '../constants/routes'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
-import { createStyles, makeStyles } from '@material-ui/styles'
-import { Theme } from '@material-ui/core'
+import { Theme, createStyles, makeStyles } from '@material-ui/core/styles'
 
 import Drawer from '@material-ui/core/Drawer'
 import Link from '@material-ui/core/Link'
