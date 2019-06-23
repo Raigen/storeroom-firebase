@@ -27,9 +27,9 @@ it('renders no logout button when not logged in', function() {
 })
 
 it('renders the logout button for logged in users', function() {
-  const { queryByText } = render(<Topbar drawerWidth={100} />)
+  const { getByText } = render(<Topbar drawerWidth={100} />)
 
-  expect(queryByText('Abmelden')).toBeTruthy()
+  expect(getByText('Abmelden')).toBeTruthy()
 })
 
 it('signs out when logout button is pressed', function() {

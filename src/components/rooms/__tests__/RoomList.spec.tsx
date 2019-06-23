@@ -34,23 +34,23 @@ it('should render nothing when not logged in', function() {
 
 it('should render the room list of the logged in user', function() {
   ;(useCollectionData as any).mockReturnValueOnce([rooms, false, null])
-  const { queryByText } = render(
+  const { getByText } = render(
     <MemoryRouter>
       <RoomsList />
     </MemoryRouter>
   )
-  expect(queryByText('Test 1')).toBeDefined()
-  expect(queryByText('Test 2')).toBeDefined()
+  expect(getByText('Test 1')).not.toBeNull()
+  expect(getByText('Test 2')).not.toBeNull()
 })
 
 it('should render the database error', function() {
   ;(useCollectionData as any).mockReturnValueOnce([null, false, new Error('Test error')])
-  const { queryByText } = render(
+  const { getByText } = render(
     <MemoryRouter>
       <RoomsList />
     </MemoryRouter>
   )
-  expect(queryByText('Fehler: Text error')).toBeDefined()
+  expect(getByText('Fehler: Test error')).not.toBeNull()
 })
 
 it('should render nothing on loading', function() {

@@ -25,7 +25,7 @@ it('should render login form when not logged in', function() {
 })
 
 it('should render welcome message for logged in users', function() {
-  const { queryByTestId, queryByText } = render(<SignIn {...mockRouterProps} />)
+  const { queryByTestId, getByText } = render(<SignIn {...mockRouterProps} />)
   expect(queryByTestId('firebase-ui')).toBeNull()
-  expect(queryByText('Willkommen!')).toBeTruthy()
+  expect(getByText('Willkommen!')).toBeTruthy()
 })
