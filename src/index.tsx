@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import './index.css'
 import './components/firebase/firebase.ts'
 
