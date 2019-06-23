@@ -1,6 +1,7 @@
+import { cleanup, render } from '@testing-library/react'
+
 import { Navigation } from '../Navigation'
 import React from 'react'
-import { render } from '@testing-library/react'
 
 jest.mock('../rooms/RoomList', () => ({
   RoomsList: () => <div data-testid="room-list" />
@@ -12,6 +13,8 @@ jest.mock('../firebase/hooks', () => ({
     .mockReturnValueOnce(null)
     .mockReturnValueOnce({ uid: '1' })
 }))
+
+afterEach(cleanup)
 
 it('renders nothing when not logged in', function() {
   const { queryByTestId } = render(<Navigation drawerWidth={100} />)
