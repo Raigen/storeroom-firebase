@@ -15,8 +15,17 @@ action "Run tests" {
   runs = "yarn"
   env = {
     CI = "true"
+    COVERALLS_SERVICE_NAME = "Github Actions"
   }
-  secrets = ["REACT_APP_API_KEY", "REACT_APP_AUTH_DOMAIN", "REACT_APP_DATABASE_URL", "REACT_APP_MESSAGING_SENDER_ID", "REACT_APP_PROJECT_ID", "REACT_APP_STORAGE_BUCKET"]
+  secrets = [
+    "REACT_APP_API_KEY",
+    "REACT_APP_AUTH_DOMAIN",
+    "REACT_APP_DATABASE_URL",
+    "REACT_APP_MESSAGING_SENDER_ID",
+    "REACT_APP_PROJECT_ID",
+    "REACT_APP_STORAGE_BUCKET",
+    "COVERALLS_REPO_TOKEN",
+  ]
 }
 
 action "Build hosting" {
