@@ -1,6 +1,7 @@
 import { FirebaseAuth } from 'react-firebaseui'
 import React from 'react'
 import { RouteComponentProps } from 'react-router'
+import Typography from '@material-ui/core/Typography'
 import { auth } from '../firebase/firebase'
 import firebase from 'firebase/app'
 import { useFirebaseUser } from '../firebase/hooks'
@@ -21,7 +22,7 @@ export const SignIn: React.FC<SignInProps> = () => {
   const user = useFirebaseUser()
 
   if (user) {
-    return <p>Hallo {user.email}</p>
+    return <Typography>Willkommen!</Typography>
   } else {
     return <FirebaseAuth firebaseAuth={auth} uiConfig={uiConfig} />
   }

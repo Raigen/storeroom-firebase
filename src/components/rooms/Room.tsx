@@ -1,7 +1,8 @@
 import { GoodsList } from './GoodsList'
 import React from 'react'
-import { firestore } from '../firebase/firebase'
 import { RouteComponentProps } from 'react-router'
+import Typography from '@material-ui/core/Typography'
+import { firestore } from '../firebase/firebase'
 import { useDocumentData } from 'react-firebase-hooks/firestore'
 import { useFirebaseUser } from '../firebase/hooks'
 
@@ -22,7 +23,7 @@ export const Room: React.FC<RoomProps> = ({ match }) => {
   if (loading || !room) return null
   return (
     <div>
-      <h3>{room.name}</h3>
+      <Typography variant="h3">{room.name}</Typography>
       <GoodsList path={collectionPath} />
     </div>
   )

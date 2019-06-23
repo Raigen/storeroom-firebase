@@ -1,6 +1,9 @@
+import { GoodListEntry } from './Good'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
 import React from 'react'
 import { firestore } from '../firebase/firebase'
-import { GoodListEntry } from './Good'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 
 export type RoomGoodType = {
@@ -20,12 +23,12 @@ export const GoodsList: React.FC<GoodsListProps> = ({ path }) => {
   if (error) return <div>{error.message}</div>
   if (loading || !goods) return null
   return (
-    <ul>
+    <List>
       {goods.map(good => (
-        <li key={good._id}>
-          <GoodListEntry goodData={good} />
-        </li>
+        <ListItem dense key={good._id}>
+          <ListItemText primary={<GoodListEntry goodData={good} />} />
+        </ListItem>
       ))}
-    </ul>
+    </List>
   )
 }
