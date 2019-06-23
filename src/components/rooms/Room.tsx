@@ -19,7 +19,7 @@ export const Room: React.FC<RoomProps> = ({ match }) => {
   const [room, loading, error] = useDocumentData<RoomType>(firestore.doc(collectionPath), {
     idField: '_id'
   })
-  if (error) return <div>{error.message}</div>
+  if (error) return <div>Fehler: {error.message}</div>
   if (loading || !room) return null
   return (
     <div>
