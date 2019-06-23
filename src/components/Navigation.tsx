@@ -1,14 +1,10 @@
-import { LANDING, ROOMLIST, SIGN_IN, SIGN_UP } from '../constants/routes'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
 import { Theme, createStyles, makeStyles } from '@material-ui/core/styles'
 
+import Divider from '@material-ui/core/Divider'
 import Drawer from '@material-ui/core/Drawer'
-import Link from '@material-ui/core/Link'
-import React from 'react'
 import List from '@material-ui/core/List'
-
-import { Link as RouterLink } from 'react-router-dom'
+import React from 'react'
+import { RoomsList } from './rooms/RoomList'
 import { useFirebaseUser } from './firebase/hooks'
 
 type NavigationPropTypes = {
@@ -28,18 +24,6 @@ const useStyles = makeStyles<Theme, NavigationPropTypes>(theme =>
   })
 )
 
-const MenuItem: React.FC<{ to: string; text: string }> = ({ to, text }) => (
-  <ListItem>
-    <ListItemText
-      primary={
-        <Link component={RouterLink} to={to}>
-          {text}
-        </Link>
-      }
-    />
-  </ListItem>
-)
-
 export const Navigation: React.FunctionComponent<NavigationPropTypes> = props => {
   const classes = useStyles(props)
   const user = useFirebaseUser()
@@ -54,17 +38,8 @@ export const Navigation: React.FunctionComponent<NavigationPropTypes> = props =>
     >
       <div className={classes.toolbar} />
       <List>
-        {user ? (
-          <>
-            <MenuItem to={LANDING} text="Home" />
-            <MenuItem to={ROOMLIST} text="Liste" />
-          </>
-        ) : (
-          <>
-            <MenuItem to={SIGN_UP} text="Registrieren" />
-            <MenuItem to={SIGN_IN} text="Anmelden" />
-          </>
-        )}
+        {user && <RoomsList />}
+        <Divider />
       </List>
     </Drawer>
   )

@@ -1,11 +1,11 @@
-import { LANDING, ROOMLIST, SIGN_IN } from '../constants/routes'
+import { LANDING, ROOM, SIGN_IN } from '../constants/routes'
 import { Route, BrowserRouter as Router } from 'react-router-dom'
 import { Theme, createStyles, makeStyles } from '@material-ui/core/styles'
 
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { Navigation } from './Navigation'
 import React from 'react'
-import { RoomsList } from './rooms/RoomList'
+import { Room } from './rooms/Room'
 import { SignIn } from './auth/SignIn'
 import { Topbar } from './Topbar'
 import Typography from '@material-ui/core/Typography'
@@ -14,7 +14,7 @@ function Home() {
   return <Typography>Home</Typography>
 }
 
-const drawerWidth = 240
+const drawerWidth = 200
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     toolbar: theme.mixins.toolbar,
@@ -40,7 +40,7 @@ export const App = () => {
         <main className={classes.content}>
           <div className={classes.toolbar} />
           <Route path={LANDING} exact component={Home} />
-          <Route path={ROOMLIST} component={RoomsList} />
+          <Route path={ROOM} component={Room} />
           <Route path={SIGN_IN} component={SignIn} />
         </main>
       </div>
