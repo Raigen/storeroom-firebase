@@ -2,9 +2,14 @@ import { Theme, createStyles, makeStyles } from '@material-ui/core/styles'
 
 import Divider from '@material-ui/core/Divider'
 import Drawer from '@material-ui/core/Drawer'
+import { GOODLIST } from '../constants/routes'
+import Link from '@material-ui/core/Link'
 import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
 import React from 'react'
 import { RoomsList } from './rooms/RoomList'
+import { Link as RouterLink } from 'react-router-dom'
 import { useFirebaseUser } from './firebase/hooks'
 
 type NavigationPropTypes = {
@@ -40,6 +45,15 @@ export const Navigation: React.FunctionComponent<NavigationPropTypes> = props =>
       <List>
         {user && <RoomsList />}
         <Divider />
+        <ListItem>
+          <ListItemText
+            primary={
+              <Link component={RouterLink} to={GOODLIST}>
+                Waren
+              </Link>
+            }
+          />
+        </ListItem>
       </List>
     </Drawer>
   )

@@ -5,3 +5,5 @@ export const HOME = '/home'
 
 export const ROOMLIST = '/rooms/'
 export const ROOM = '/rooms/:id'
+
+export const GOODLIST = '/goods/'

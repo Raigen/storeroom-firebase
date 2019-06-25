@@ -6,6 +6,7 @@ import React from 'react'
 jest.mock('../rooms/RoomList', () => ({
   RoomsList: () => <div data-testid="room-list" />
 }))
+jest.mock('@material-ui/core/ListItem', () => () => <div />)
 
 jest.mock('../firebase/hooks', () => ({
   useFirebaseUser: jest
