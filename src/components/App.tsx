@@ -1,8 +1,9 @@
-import { LANDING, ROOM, SIGN_IN } from '../constants/routes'
+import { GOODLIST, LANDING, ROOM, SIGN_IN } from '../constants/routes'
 import { Route, BrowserRouter as Router } from 'react-router-dom'
 import { Theme, createStyles, makeStyles } from '@material-ui/core/styles'
 
 import CssBaseline from '@material-ui/core/CssBaseline'
+import { GoodList } from './goods/GoodList'
 import { Navigation } from './Navigation'
 import React from 'react'
 import { Room } from './rooms/Room'
@@ -41,6 +42,7 @@ export const App = () => {
           <div className={classes.toolbar} />
           <Route path={LANDING} exact component={Home} />
           <Route path={ROOM} component={Room} />
+          <Route path={GOODLIST} component={GoodList} />
           <Route path={SIGN_IN} component={SignIn} />
         </main>
       </div>
