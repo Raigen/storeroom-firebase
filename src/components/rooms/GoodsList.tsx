@@ -20,13 +20,22 @@ export const GoodsList: React.FC<GoodsListProps> = ({ path }) => {
   const [goods, loading, error] = useCollectionData<RoomGoodType>(firestore.collection(`${path}/goods`), {
     idField: '_id'
   })
+
+  const setAmount = React.useCallback(
+    (id: string) => async (newAmount: number) => {
+      const document = firestore.doc(`${path}/goods/${id}`)
+      await document.update('amount', newAmount)
+    },
+    [path]
+  )
+
   if (error) return <div>Fehler: {error.message}</div>
   if (loading || !goods) return null
   return (
     <List>
       {goods.map(good => (
         <ListItem dense key={good._id}>
-          <ListItemText primary={<GoodListEntry goodData={good} />} />
+          <ListItemText primary={<GoodListEntry goodData={good} setGoodAmount={setAmount} />} />
         </ListItem>
       ))}
     </List>
