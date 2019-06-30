@@ -1,8 +1,19 @@
-import { cleanup, render } from '@testing-library/react'
+import { cleanup, fireEvent, render } from '@testing-library/react'
 
 import { GoodList } from '../GoodList'
 import React from 'react'
+import { firestore } from '../../firebase/firebase'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
+
+function delay(duration: number) {
+  return function() {
+    return new Promise(function(resolve, reject) {
+      setTimeout(function() {
+        resolve()
+      }, duration)
+    })
+  }
+}
 
 jest.mock('../Good', () => ({
   GoodListEntry: (props: any) => <div data-testid="good">{JSON.stringify(props)}</div>
@@ -21,6 +32,8 @@ jest.mock('react-firebase-hooks/firestore', () => ({
     .mockName('useCollectionData')
     .mockReturnValue([[], false, null])
 }))
+
+jest.mock('../../firebase/firebase')
 
 afterEach(cleanup)
 
@@ -49,7 +62,7 @@ it('should render the good list', function() {
 
 it('should render the database error', function() {
   ;(useCollectionData as any).mockReturnValueOnce([null, false, new Error('Test error')])
-  const { getByText, container } = render(<GoodList />)
+  const { getByText } = render(<GoodList />)
   expect(getByText('Fehler: Test error')).not.toBeNull()
 })
 
@@ -57,4 +70,17 @@ it('should render nothing on loading', function() {
   ;(useCollectionData as any).mockReturnValueOnce([null, true, null])
   const { container } = render(<GoodList />)
   expect(container).toMatchInlineSnapshot(`<div />`)
+})
+
+it('should add a new good', async function() {
+  const { getByPlaceholderText, getByTestId } = render(<GoodList />)
+  fireEvent.change(getByPlaceholderText('Zucker'), { target: { value: 'Mehl' } })
+  fireEvent.change(getByPlaceholderText('kg'), { target: { value: 'g' } })
+  fireEvent.submit(getByTestId('goodForm'))
+
+  await delay(1)
+
+  expect((getByPlaceholderText('Zucker') as HTMLInputElement).value).toEqual('')
+  expect((getByPlaceholderText('kg') as HTMLInputElement).value).toEqual('')
+  expect(firestore.collection('').add).toHaveBeenCalledWith({ name: 'Mehl', unit: 'g' })
 })
