@@ -5,7 +5,7 @@ import React from 'react'
 import { firestore } from '../../firebase/firebase'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 
-function delay(duration: number) {
+export function delay(duration: number) {
   return function() {
     return new Promise(function(resolve, reject) {
       setTimeout(function() {

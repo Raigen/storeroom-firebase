@@ -1,3 +1,4 @@
+import { GoodAmountInputField } from './GoodAmountInputField'
 import React from 'react'
 import { RoomGoodType } from './GoodsList'
 import Typography from '@material-ui/core/Typography'
@@ -10,17 +11,22 @@ type GoodType = {
   unit: string
 }
 
-type GoodListEntryProps = { goodData: RoomGoodType }
+export type GoodListEntryProps = {
+  goodData: RoomGoodType
+  setGoodAmount: (id: string) => (amount: number) => Promise<void>
+}
 
-export const GoodListEntry: React.FC<GoodListEntryProps> = ({ goodData }) => {
-  const [good, loading, error] = useDocumentData<GoodType>(firestore.doc(`/goods/${goodData.ref.id}`), {
+export const GoodListEntry: React.FC<GoodListEntryProps> = ({ goodData, setGoodAmount }) => {
+  const document = firestore.doc(`/goods/${goodData.ref.id}`)
+  const [good, loading, error] = useDocumentData<GoodType>(document, {
     idField: '_id'
   })
-  if (error) return <li>Fehler: {error.message}</li>
+  if (error) return <span>Fehler: {error.message}</span>
   if (loading || !good) return null
   return (
-    <Typography>
-      {good.name} - {goodData.amount} {good.unit}
+    <Typography component="div">
+      {good.name} -
+      <GoodAmountInputField amount={goodData.amount} updateAmount={setGoodAmount(goodData._id)} unit={good.unit} />
     </Typography>
   )
 }
