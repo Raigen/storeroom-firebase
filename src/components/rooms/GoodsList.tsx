@@ -12,7 +12,7 @@ export type RoomGoodType = {
   amount: number
 }
 
-type GoodsListProps = {
+export type GoodsListProps = {
   path: string
 }
 
