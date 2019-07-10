@@ -2,8 +2,17 @@
   "extends": [
     "config:base"
   ],
-  "packageRules": [{
-    "depTypeList": ["devDependencies"],
-    "automerge": true
-  }]
+  "packageRules": [
+    {
+      "depTypeList": ["devDependencies"],
+      "automerge": true,
+      "automergeType": "branch"
+    },
+    {
+      "packagePatterns": "@types/",
+      "groupName": "types",
+      "automerge": true,
+      "automergeType": "branch"
+    }
+  ]
 }
