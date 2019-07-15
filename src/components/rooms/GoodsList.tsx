@@ -1,3 +1,4 @@
+import { GoodEntry } from './GoodEntry'
 import { GoodListEntry } from './Good'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -32,12 +33,15 @@ export const GoodsList: React.FC<GoodsListProps> = ({ path }) => {
   if (error) return <div>Fehler: {error.message}</div>
   if (loading || !goods) return null
   return (
-    <List>
-      {goods.map(good => (
-        <ListItem dense key={good._id}>
-          <ListItemText primary={<GoodListEntry goodData={good} setGoodAmount={setAmount} />} />
-        </ListItem>
-      ))}
-    </List>
+    <>
+      <List>
+        {goods.map(good => (
+          <ListItem dense key={good._id}>
+            <ListItemText primary={<GoodListEntry goodData={good} setGoodAmount={setAmount} />} />
+          </ListItem>
+        ))}
+      </List>
+      <GoodEntry path={path} />
+    </>
   )
 }

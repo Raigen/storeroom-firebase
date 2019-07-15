@@ -3,9 +3,18 @@ import { cleanup, fireEvent, render } from '@testing-library/react'
 import { GoodListEntryProps } from '../Good'
 import { GoodsList } from '../GoodsList'
 import React from 'react'
-import { delay } from '../../goods/__tests__/GoodList.spec'
 import { firestore } from '../../firebase/firebase'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
+
+function delay(duration: number) {
+  return function() {
+    return new Promise(function(resolve, reject) {
+      setTimeout(function() {
+        resolve()
+      }, duration)
+    })
+  }
+}
 
 jest.mock('../Good', () => ({
   GoodListEntry: (props: GoodListEntryProps) => (
@@ -16,6 +25,10 @@ jest.mock('../Good', () => ({
       </button>
     </div>
   )
+}))
+
+jest.mock('../GoodEntry', () => ({
+  GoodEntry: (props: any) => <div data-testid="goodEntry" />
 }))
 
 jest.mock('../../firebase/hooks', () => ({

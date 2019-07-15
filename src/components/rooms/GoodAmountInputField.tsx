@@ -7,7 +7,7 @@ import { TextField } from '@material-ui/core'
 type GoodAmountInputFieldProps = {
   amount: number
   unit: string
-  updateAmount: (amount: number) => Promise<void>
+  updateAmount: (amount: number) => any
 }
 
 const useStyles = makeStyles(() =>
