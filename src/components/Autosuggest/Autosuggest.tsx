@@ -6,7 +6,7 @@ import Downshift from 'downshift'
 import Paper from '@material-ui/core/Paper'
 import React from 'react'
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles<Theme, AutoSuggestProps>((theme: Theme) =>
   createStyles({
     root: {
       flexGrow: 1,
@@ -14,7 +14,10 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     container: {
       flexGrow: 1,
-      position: 'relative'
+      position: 'relative',
+      display: 'inline-flex',
+      verticalAlign: 'top',
+      padding: '0 10px'
     },
     paper: {
       position: 'absolute',
@@ -24,7 +27,8 @@ const useStyles = makeStyles((theme: Theme) =>
       right: 0
     },
     inputRoot: {
-      flexWrap: 'wrap'
+      flexWrap: 'wrap',
+      width: props => props.inputWidth
     },
     inputInput: {
       width: 'auto',
@@ -112,11 +116,13 @@ type AutoSuggestProps = {
   suggestions: Suggestion[]
   placeholder?: string
   disabled?: boolean
+  inputWidth: number
   onChange: (value: Suggestion) => void
 }
 
-export const Autosuggest: React.FC<AutoSuggestProps> = ({ suggestions, placeholder, disabled, onChange }) => {
-  const classes = useStyles()
+export const Autosuggest: React.FC<AutoSuggestProps> = props => {
+  const { suggestions, placeholder, disabled, onChange } = props
+  const classes = useStyles(props)
   const getSuggestions = React.useCallback(prepareGetSuggestions(suggestions), [suggestions])
   const handleChange = (value: string) => {
     const oldSuggestion = suggestions.find(suggestion => suggestion.name === value)

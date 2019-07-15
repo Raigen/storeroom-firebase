@@ -53,6 +53,7 @@ export const GoodEntry: React.FC<GoodEntryProps> = ({ path, initialGoodData = em
         suggestions={goodSuggestion}
         placeholder={loading ? 'Laden...' : 'Milch'}
         onChange={value => setGoodData(prev => ({ ...prev, ...value }))}
+        inputWidth={200}
       />
       <GoodAmountInputField
         amount={goodData.amount}
@@ -64,6 +65,7 @@ export const GoodEntry: React.FC<GoodEntryProps> = ({ path, initialGoodData = em
           suggestions={unitSuggestion}
           placeholder={loading ? 'Laden...' : 'kg'}
           onChange={value => setGoodData(prev => ({ ...prev, unit: value.name }))}
+          inputWidth={200}
         />
       )}
       <Button onClick={handleSave} disabled={!isFormValid}>
