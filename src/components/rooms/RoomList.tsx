@@ -5,6 +5,7 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import { ROOMLIST } from '../../constants/routes'
 import React from 'react'
+import RoomEntryController from './RoomEntryController'
 import { RoomType } from './Room'
 import { Link as RouterLink } from 'react-router-dom'
 import { firestore } from '../firebase/firebase'
@@ -35,6 +36,9 @@ export const RoomsList: React.FC<RoomListProps> = () => {
           />
         </ListItem>
       ))}
+      <ListItem key="new">
+        <RoomEntryController path={collectionPath} />
+      </ListItem>
     </>
   )
 }
