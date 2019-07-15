@@ -24,7 +24,7 @@ export const GoodEntry: React.FC<GoodEntryProps> = ({ path, initialGoodData = em
   const goodsCollection = React.useMemo(() => firestore.collection('goods/'), [])
   const [goodData, setGoodData] = React.useState<GoodDataType>(initialGoodData)
   // fetch list of all available goods
-  const [goods, loading, error] = useCollection(goodsCollection)
+  const [goods, loading] = useCollection(goodsCollection)
 
   // list of all good names with ref
   const goodSuggestion: Suggestion[] = goods
