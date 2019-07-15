@@ -1,24 +1,30 @@
 import { Autosuggest, Suggestion } from '../Autosuggest/Autosuggest'
 
-import { Button } from '@material-ui/core'
+import Button from '@material-ui/core/Button'
 import { GoodAmountInputField } from './GoodAmountInputField'
 import React from 'react'
 import { firestore } from '../firebase/firebase'
 import { useCollection } from 'react-firebase-hooks/firestore'
 
-type GoodEntryProps = {
-  path: string
+type GoodDataType = {
+  name: string
+  unit: string
+  amount: number
+  ref?: firebase.firestore.DocumentReference
 }
 
-export const GoodEntry: React.FC<GoodEntryProps> = ({ path }) => {
-  const [goodData, setGoodData] = React.useState<{
-    name: string
-    unit: string
-    amount: number
-    ref?: firebase.firestore.DocumentReference
-  }>({ name: '', amount: 0, unit: '' })
+const emptyGoodData: GoodDataType = { name: '', amount: 0, unit: '', ref: undefined }
+
+type GoodEntryProps = {
+  path: string
+  initialGoodData?: GoodDataType
+}
+
+export const GoodEntry: React.FC<GoodEntryProps> = ({ path, initialGoodData = emptyGoodData }) => {
+  const goodsCollection = React.useMemo(() => firestore.collection('goods/'), [])
+  const [goodData, setGoodData] = React.useState<GoodDataType>(initialGoodData)
   // fetch list of all available goods
-  const [goods, , loading] = useCollection(firestore.collection('goods/'))
+  const [goods, loading, error] = useCollection(goodsCollection)
 
   // list of all good names with ref
   const goodSuggestion: Suggestion[] = goods
@@ -28,13 +34,13 @@ export const GoodEntry: React.FC<GoodEntryProps> = ({ path }) => {
   const unitSuggestion: Suggestion[] = goods ? goods.docs.map(good => ({ name: good.data().unit })) : []
 
   const handleSave = async () => {
+    const roomGoodsCollection = firestore.collection(`${path}/goods`)
     // use existing good or create a new one
-    const newGood =
-      goodData.ref || (await firestore.collection('goods/').add({ name: goodData.name, unit: goodData.unit }))
+    const newGood = goodData.ref || (await goodsCollection.add({ name: goodData.name, unit: goodData.unit }))
     // add good to the room
-    await firestore.collection(`${path}/goods`).add({ amount: goodData.amount, ref: newGood })
+    await roomGoodsCollection.add({ amount: goodData.amount, ref: newGood })
     // reset form data
-    setGoodData({ name: '', unit: '', amount: 0, ref: undefined })
+    setGoodData(emptyGoodData)
   }
 
   const isFormValid = React.useMemo<boolean>(() => {
