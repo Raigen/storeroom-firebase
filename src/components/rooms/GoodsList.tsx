@@ -1,8 +1,7 @@
 import { GoodEntry } from './GoodEntry'
 import { GoodListEntry } from './Good'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
+import GridList from '@material-ui/core/GridList'
+import GridListTile from '@material-ui/core/GridListTile'
 import React from 'react'
 import { firestore } from '../firebase/firebase'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
@@ -34,13 +33,13 @@ export const GoodsList: React.FC<GoodsListProps> = ({ path }) => {
   if (loading || !goods) return null
   return (
     <>
-      <List>
+      <GridList cols={5}>
         {goods.map(good => (
-          <ListItem dense key={good._id}>
-            <ListItemText primary={<GoodListEntry goodData={good} setGoodAmount={setAmount} />} />
-          </ListItem>
+          <GridListTile key={good._id}>
+            <GoodListEntry goodData={good} setGoodAmount={setAmount} />
+          </GridListTile>
         ))}
-      </List>
+      </GridList>
       <GoodEntry path={path} />
     </>
   )

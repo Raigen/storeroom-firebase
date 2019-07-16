@@ -38,9 +38,6 @@ it('should render the goods name with amount and unit', function() {
         data-props="{\\"amount\\":10,\\"unit\\":\\"kg\\"}"
         data-testid="GoodAmountInputField"
       />
-      <hr
-        class="MuiDivider-root"
-      />
     </div>
   `)
 })

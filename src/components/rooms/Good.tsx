@@ -28,7 +28,6 @@ export const GoodListEntry: React.FC<GoodListEntryProps> = ({ goodData, setGoodA
     <>
       <Typography component="div">{good.name}</Typography>
       <GoodAmountInputField amount={goodData.amount} updateAmount={setGoodAmount(goodData._id)} unit={good.unit} />
-      <Divider />
     </>
   )
 }
