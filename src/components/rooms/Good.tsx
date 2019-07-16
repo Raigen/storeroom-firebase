@@ -1,4 +1,3 @@
-import { Divider } from '@material-ui/core'
 import { GoodAmountInputField } from './GoodAmountInputField'
 import React from 'react'
 import { RoomGoodType } from './GoodsList'
