@@ -11,7 +11,7 @@ type RoomEntryProps = {
 const RoomEntry: React.FC<RoomEntryProps> = ({ name, onSave, onChange }) => {
   const changeHandler: React.ChangeEventHandler<HTMLInputElement> = React.useCallback(
     event => onChange(event.target.value),
-    []
+    [onChange]
   )
   return (
     <>
