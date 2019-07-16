@@ -12,7 +12,10 @@ const uiConfig: firebaseui.auth.Config = {
   credentialHelper: 'none',
   signInFlow: 'popup',
   signInSuccessUrl: '/',
-  signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID, firebase.auth.EmailAuthProvider.PROVIDER_ID],
+  signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID, {
+    provider:firebase.auth.EmailAuthProvider.PROVIDER_ID,
+    requireDisplayName: false,
+  }],
   callbacks: {
     signInSuccessWithAuthResult: () => false
   }
