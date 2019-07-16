@@ -22,7 +22,7 @@ export const RoomsList: React.FC<RoomListProps> = () => {
 
   if (!user) return null
   if (error) return <div>Fehler: {error.message}</div>
-  if (loading || !rooms || rooms.length === 0) return null
+  if (loading || !rooms) return null
   return (
     <>
       {rooms.map(room => (

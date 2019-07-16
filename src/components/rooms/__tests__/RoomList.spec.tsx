@@ -34,13 +34,14 @@ it('should render nothing when not logged in', function() {
 
 it('should render the room list of the logged in user', function() {
   ;(useCollectionData as any).mockReturnValueOnce([rooms, false, null])
-  const { getByText } = render(
+  const { getByText, getByPlaceholderText } = render(
     <MemoryRouter>
       <RoomsList />
     </MemoryRouter>
   )
   expect(getByText('Test 1')).not.toBeNull()
   expect(getByText('Test 2')).not.toBeNull()
+  expect(getByPlaceholderText('Name')).toBeTruthy()
 })
 
 it('should render the database error', function() {
@@ -61,4 +62,14 @@ it('should render nothing on loading', function() {
     </MemoryRouter>
   )
   expect(container).toMatchInlineSnapshot(`<div />`)
+})
+
+it('should render the entry field with empty rooms', function() {
+  ;(useCollectionData as any).mockReturnValueOnce([[], false, null])
+  const { getByPlaceholderText } = render(
+    <MemoryRouter>
+      <RoomsList />
+    </MemoryRouter>
+  )
+  expect(getByPlaceholderText('Name')).toBeTruthy()
 })
