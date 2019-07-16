@@ -1,5 +1,3 @@
-import 'jest-dom/extend-expect'
-
 import { cleanup, fireEvent, render } from '@testing-library/react'
 
 import React from 'react'
