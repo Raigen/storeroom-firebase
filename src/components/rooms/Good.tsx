@@ -1,4 +1,3 @@
-import { Divider } from '@material-ui/core'
 import { GoodAmountInputField } from './GoodAmountInputField'
 import React from 'react'
 import { RoomGoodType } from './GoodsList'
@@ -28,7 +27,6 @@ export const GoodListEntry: React.FC<GoodListEntryProps> = ({ goodData, setGoodA
     <>
       <Typography component="div">{good.name}</Typography>
       <GoodAmountInputField amount={goodData.amount} updateAmount={setGoodAmount(goodData._id)} unit={good.unit} />
-      <Divider />
     </>
   )
 }
