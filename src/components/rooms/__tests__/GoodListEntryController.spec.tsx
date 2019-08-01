@@ -25,8 +25,26 @@ const setGoodAmount = jest
 const deleteGoodAmount = jest.fn().mockName('deleteGoodAmount')
 
 afterEach(() => {
-  setGoodAmount.mockReset()
+  updateAmount.mockClear()
+  setGoodAmount.mockClear()
+  deleteGoodAmount.mockClear()
   cleanup()
+})
+
+it('should render the database error', function() {
+  ;(useDocumentData as jest.Mock).mockReturnValueOnce([null, false, new Error('Test error')])
+  const { getByText } = render(
+    <GoodListEntryController goodData={goodData} setAmount={setGoodAmount} deleteGood={deleteGoodAmount} />
+  )
+  expect(getByText('Fehler: Test error')).not.toBeNull()
+})
+
+it('should render nothing on loading', function() {
+  ;(useDocumentData as jest.Mock).mockReturnValueOnce([null, true, null])
+  const { container } = render(
+    <GoodListEntryController goodData={goodData} setAmount={setGoodAmount} deleteGood={deleteGoodAmount} />
+  )
+  expect(container).toMatchInlineSnapshot(`<div />`)
 })
 
 it('updates the amount on blur', async function() {
