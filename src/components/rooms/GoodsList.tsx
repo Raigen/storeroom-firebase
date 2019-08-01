@@ -1,8 +1,7 @@
 import { Theme, createStyles, makeStyles } from '@material-ui/core'
 
 import { GoodEntry } from './GoodEntry'
-import { GoodListEntry } from './Good'
-import Paper from '@material-ui/core/Paper'
+import { GoodListEntryController } from './GoodListEntryController'
 import React from 'react'
 import { firestore } from '../firebase/firebase'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
@@ -45,7 +44,16 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
+const useDeleteRoomGood = (roomPath: string) => {
+  const collection = firestore.collection(`${roomPath}/goods/`)
+  const callback = async (goodId: string) => {
+    return collection.doc(goodId).delete()
+  }
+  return callback
+}
+
 export const GoodsList: React.FC<GoodsListProps> = ({ path }) => {
+  const deleteGood = useDeleteRoomGood(path)
   const classes = useStyles()
   const [goods, loading, error] = useCollectionData<RoomGoodType>(firestore.collection(`${path}/goods`), {
     idField: '_id'
@@ -66,9 +74,7 @@ export const GoodsList: React.FC<GoodsListProps> = ({ path }) => {
       <div className={classes.container}>
         {goods.map(good => (
           <div className={classes.item} key={good._id}>
-            <Paper className={classes.paper}>
-              <GoodListEntry goodData={good} setGoodAmount={setAmount} />
-            </Paper>
+            <GoodListEntryController goodData={good} setAmount={setAmount} deleteGood={deleteGood} />
           </div>
         ))}
       </div>
