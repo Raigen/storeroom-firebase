@@ -10000,10 +10000,10 @@ react-error-overlay@^5.1.6:
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-5.1.6.tgz#0cd73407c5d141f9638ae1e0c63e7b2bf7e9929d"
   integrity sha512-X1Y+0jR47ImDVr54Ab6V9eGk0Hnu7fVWGeHQSOXHf/C2pF9c6uy3gef8QUeuUiWlNb0i08InPSE5a/KJzNzw1Q==
 
-react-firebase-hooks@2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/react-firebase-hooks/-/react-firebase-hooks-2.0.0.tgz#0f754de23eaefba18af8bce8a171c45321ec8c59"
-  integrity sha512-zeT1UC8loEfrzKo/AujfUEDAI+ooc8dz+PSrxkLWuGy1Kd6HkC3SzrRna35B8Y8akAMkvuN/GRr0Cm9CbPEGDw==
+react-firebase-hooks@2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/react-firebase-hooks/-/react-firebase-hooks-2.1.0.tgz#c7228cbfec9e886a2b5de1ec63a74c0095506a96"
+  integrity sha512-b5o09O0OnVh5hFOEmEhiYRTqRe67I4mGk9zX+admBI6rwVWOYytrsTwXV5RhSfsAtmcvsbsRxI0VBJ6M45vXBw==
 
 react-firebaseui@3.1.2:
   version "3.1.2"
