@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "@testing-library/jest-dom": "4.0.0",
-    "@testing-library/react": "9.0.2",
+    "@testing-library/react": "9.1.0",
     "firebase-tools": "7.2.2",
     "prettier": "1.18.2"
   }
