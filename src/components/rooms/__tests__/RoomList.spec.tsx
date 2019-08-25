@@ -1,8 +1,9 @@
-import { cleanup, render } from '@testing-library/react'
+import { cleanup, fireEvent, render } from '@testing-library/react'
 
 import { MemoryRouter } from 'react-router'
 import React from 'react'
 import { RoomsList } from '../RoomList'
+import { firestore } from '../../firebase/firebase'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 
 jest.mock('../../firebase/hooks', () => ({
@@ -18,6 +19,8 @@ jest.mock('react-firebase-hooks/firestore', () => ({
     .mockName('useCollectionData')
     .mockReturnValue([[], false, null])
 }))
+
+jest.mock('../../firebase/firebase')
 
 afterEach(cleanup)
 
@@ -42,6 +45,32 @@ it('should render the room list of the logged in user', function() {
   expect(getByText('Test 1')).not.toBeNull()
   expect(getByText('Test 2')).not.toBeNull()
   expect(getByPlaceholderText('Name')).toBeTruthy()
+})
+
+it('should delete the first room', function() {
+  ;(useCollectionData as any).mockReturnValueOnce([rooms, false, null])
+  const { getByTitle, getAllByTitle } = render(
+    <MemoryRouter>
+      <RoomsList />
+    </MemoryRouter>
+  )
+  fireEvent.click(getAllByTitle('Löschen')[0])
+  fireEvent.click(getByTitle('Sicher'))
+
+  expect(firestore.collection('users/1/rooms').doc('1').delete).toHaveBeenCalled()
+})
+
+it('should cancel the deletion', function() {
+  ;(useCollectionData as any).mockReturnValueOnce([rooms, false, null])
+  const { getByTitle, getAllByTitle } = render(
+    <MemoryRouter>
+      <RoomsList />
+    </MemoryRouter>
+  )
+  fireEvent.click(getAllByTitle('Löschen')[0])
+  fireEvent.click(getByTitle('Abbrechen'))
+
+  expect(getAllByTitle('Löschen')).toHaveLength(2)
 })
 
 it('should render the database error', function() {
