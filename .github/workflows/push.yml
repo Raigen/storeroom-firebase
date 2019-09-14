@@ -2,7 +2,7 @@ on: push
 name: Firebase hosting
 jobs:
   installDependencies:
-    name: Install dependencies
+    name: Test and deploy
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
@@ -39,8 +39,8 @@ jobs:
         args: build
     - name: Deploy hosting to firebase
       if: github.ref == 'refs/heads/master'
-      uses: w9jds/firebase-action@7d6b2b058813e1224cdd4db255b2f163ae4084d3
+      uses: jakejarvis/firebase-deploy-action@master
       env:
         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
       with:
-        args: deploy --only hosting
+        args: --only hosting
