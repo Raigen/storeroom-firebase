@@ -37,11 +37,8 @@ jobs:
       with:
         entrypoint: yarn
         args: build
-    - name: Deploy only on master
-      uses: actions/bin/filter@3c0b4f0e63ea54ea5df2914b4fabf383368cd0da
-      with:
-        args: branch master
     - name: Deploy hosting to firebase
+      if: github.ref == 'master'
       uses: w9jds/firebase-action@7d6b2b058813e1224cdd4db255b2f163ae4084d3
       env:
         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
