@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render } from '@testing-library/react'
+import { act, cleanup, fireEvent, render } from '@testing-library/react'
 
 import { GoodList } from '../GoodList'
 import React from 'react'
@@ -6,13 +6,11 @@ import { firestore } from '../../firebase/firebase'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 
 export function delay(duration: number) {
-  return function() {
-    return new Promise(function(resolve, reject) {
-      setTimeout(function() {
-        resolve()
-      }, duration)
-    })
-  }
+  return new Promise(function(resolve, reject) {
+    setTimeout(function() {
+      resolve()
+    }, duration)
+  })
 }
 
 jest.mock('../Good', () => ({

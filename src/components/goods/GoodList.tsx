@@ -37,11 +37,17 @@ export const GoodList: React.FC<ListProps> = () => {
   })
   if (error) return <div>Fehler: {error.message}</div>
   if (loading || !goods) return null
+
+  const deleteEntry = async (id: string) => {
+    await firestore.collection('goods/').doc(id).delete()
+  }
+
+
   return (
     <List>
       {goods.map(good => (
         <ListItem dense key={good._id}>
-          <ListItemText primary={<GoodListEntry good={good} />} />
+          <ListItemText primary={<GoodListEntry good={good} onDelete={deleteEntry} />} />
         </ListItem>
       ))}
       <ListItem dense>
