@@ -1,0 +1,46 @@
+on: push
+name: Firebase hosting
+jobs:
+  installDependencies:
+    name: Test and deploy
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Install dependencies
+      uses: docker://node:10
+      with:
+        entrypoint: yarn
+    - name: Run tests
+      uses: docker://node:10
+      env:
+        CI: "true"
+        COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+        COVERALLS_SERVICE_NAME: Github Actions
+        REACT_APP_API_KEY: ${{ secrets.REACT_APP_API_KEY }}
+        REACT_APP_AUTH_DOMAIN: ${{ secrets.REACT_APP_AUTH_DOMAIN }}
+        REACT_APP_DATABASE_URL: ${{ secrets.REACT_APP_DATABASE_URL }}
+        REACT_APP_MESSAGING_SENDER_ID: ${{ secrets.REACT_APP_MESSAGING_SENDER_ID }}
+        REACT_APP_PROJECT_ID: ${{ secrets.REACT_APP_PROJECT_ID }}
+        REACT_APP_STORAGE_BUCKET: ${{ secrets.REACT_APP_STORAGE_BUCKET }}
+      with:
+        entrypoint: yarn
+        args: test
+    - name: Build hosting
+      uses: docker://node:10
+      env:
+        REACT_APP_API_KEY: ${{ secrets.REACT_APP_API_KEY }}
+        REACT_APP_AUTH_DOMAIN: ${{ secrets.REACT_APP_AUTH_DOMAIN }}
+        REACT_APP_DATABASE_URL: ${{ secrets.REACT_APP_DATABASE_URL }}
+        REACT_APP_MESSAGING_SENDER_ID: ${{ secrets.REACT_APP_MESSAGING_SENDER_ID }}
+        REACT_APP_PROJECT_ID: ${{ secrets.REACT_APP_PROJECT_ID }}
+        REACT_APP_STORAGE_BUCKET: ${{ secrets.REACT_APP_STORAGE_BUCKET }}
+      with:
+        entrypoint: yarn
+        args: build
+    - name: Deploy hosting to firebase
+      if: github.ref == 'refs/heads/master'
+      uses: jakejarvis/firebase-deploy-action@master
+      env:
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      with:
+        args: --only hosting
