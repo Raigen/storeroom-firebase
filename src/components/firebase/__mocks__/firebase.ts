@@ -21,7 +21,10 @@ export const collection = jest
   .mockName('collection')
   .mockReturnValue({ add: collectionAdd, doc })
 
+export const collectionGroup = jest.fn().mockName('collectionGroup')
+
 export const firestore = {
   collection,
+  collectionGroup,
   doc
 }

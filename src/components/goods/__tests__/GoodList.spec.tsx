@@ -28,6 +28,10 @@ jest.mock('react-firebase-hooks/firestore', () => ({
   useCollectionData: jest
     .fn()
     .mockName('useCollectionData')
+    .mockReturnValue([[], false, null]),
+  useCollectionDataOnce: jest
+    .fn()
+    .mockName('useCollectionDataOnce')
     .mockReturnValue([[], false, null])
 }))
 
@@ -46,14 +50,14 @@ it('should render the good list', function() {
     <div
       data-testid="good"
     >
-      {"good":{"_id":"1"}}
+      {"good":{"_id":"1"},"isUsed":false}
     </div>
   `)
   expect(goodItems[1]).toMatchInlineSnapshot(`
     <div
       data-testid="good"
     >
-      {"good":{"_id":"2"}}
+      {"good":{"_id":"2"},"isUsed":false}
     </div>
   `)
 })
