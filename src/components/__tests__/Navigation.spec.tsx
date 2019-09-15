@@ -18,13 +18,15 @@ jest.mock('../firebase/hooks', () => ({
 afterEach(cleanup)
 
 it('renders nothing when not logged in', function() {
-  const { queryByTestId } = render(<Navigation drawerWidth={100} />)
+  const { queryByTestId } = render(<Navigation drawerWidth={100} isMobileOpen={false} handleDrawerToggle={() => {}} />)
 
   expect(queryByTestId('room-list')).toBeNull()
 })
 
 it('renders the roomlist for logged in users', function() {
-  const { queryByTestId } = render(<Navigation drawerWidth={100} />)
+  const { queryAllByTestId } = render(
+    <Navigation drawerWidth={100} isMobileOpen={false} handleDrawerToggle={() => {}} />
+  )
 
-  expect(queryByTestId('room-list')).toBeTruthy()
+  expect(queryAllByTestId('room-list')).toHaveLength(2)
 })

@@ -32,12 +32,14 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const App = () => {
   const classes = useStyles()
+  const [mobileOpen, setMobileOpen] = React.useState(false)
+  const toggleDrawer = () => setMobileOpen(!mobileOpen)
   return (
     <Router>
       <div className={classes.root}>
         <CssBaseline />
-        <Topbar drawerWidth={drawerWidth} />
-        <Navigation drawerWidth={drawerWidth} />
+        <Topbar drawerWidth={drawerWidth} handleDrawerToggle={toggleDrawer} />
+        <Navigation drawerWidth={drawerWidth} isMobileOpen={mobileOpen} handleDrawerToggle={toggleDrawer} />
         <main className={classes.content}>
           <div className={classes.toolbar} />
           <Route path={LANDING} exact component={Home} />
