@@ -3,6 +3,7 @@ import { Theme, createStyles, makeStyles } from '@material-ui/core/styles'
 import Divider from '@material-ui/core/Divider'
 import Drawer from '@material-ui/core/Drawer'
 import { GOODLIST } from '../constants/routes'
+import Hidden from '@material-ui/core/Hidden'
 import Link from '@material-ui/core/Link'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -14,14 +15,18 @@ import { useFirebaseUser } from './firebase/hooks'
 
 type NavigationPropTypes = {
   drawerWidth: number
+  isMobileOpen: boolean
+  handleDrawerToggle: () => void
 }
 
 const useStyles = makeStyles<Theme, NavigationPropTypes>(theme =>
   createStyles({
     toolbar: theme.mixins.toolbar,
     drawer: ({ drawerWidth }) => ({
-      width: drawerWidth,
-      flexShrink: 0
+      [theme.breakpoints.up('sm')]: {
+        width: drawerWidth,
+        flexShrink: 0
+      }
     }),
     drawerPaper: ({ drawerWidth }) => ({
       width: drawerWidth
@@ -32,15 +37,9 @@ const useStyles = makeStyles<Theme, NavigationPropTypes>(theme =>
 export const Navigation: React.FunctionComponent<NavigationPropTypes> = props => {
   const classes = useStyles(props)
   const user = useFirebaseUser()
-  return (
-    <Drawer
-      variant="permanent"
-      anchor="left"
-      className={classes.drawer}
-      classes={{
-        paper: classes.drawerPaper
-      }}
-    >
+  const { isMobileOpen, handleDrawerToggle } = props
+  const drawer = (
+    <>
       <div className={classes.toolbar} />
       <List>
         {user && <RoomsList />}
@@ -55,6 +54,37 @@ export const Navigation: React.FunctionComponent<NavigationPropTypes> = props =>
           />
         </ListItem>
       </List>
-    </Drawer>
+    </>
+  )
+  return (
+    <nav className={classes.drawer}>
+      <Hidden smUp implementation="css">
+        <Drawer
+          variant="temporary"
+          anchor="left"
+          open={isMobileOpen}
+          onClose={handleDrawerToggle}
+          classes={{
+            paper: classes.drawerPaper
+          }}
+          ModalProps={{
+            keepMounted: true // Better open performance on mobile.
+          }}
+        >
+          {drawer}
+        </Drawer>
+      </Hidden>
+      <Hidden xsDown implementation="css">
+        <Drawer
+          classes={{
+            paper: classes.drawerPaper
+          }}
+          variant="permanent"
+          open
+        >
+          {drawer}
+        </Drawer>
+      </Hidden>
+    </nav>
   )
 }
