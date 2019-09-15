@@ -36,9 +36,12 @@ export const GoodList: React.FC<ListProps> = () => {
   const [goods, loading, error] = useCollectionData<GoodType>(firestore.collection('/goods'), {
     idField: '_id'
   })
-  const [usedGoods, uLoading, uError] = useCollectionDataOnce<GoodType | RoomGoodType>(firestore.collectionGroup('goods'), {
-    idField: '_id'
-  })
+  const [usedGoods, uLoading, uError] = useCollectionDataOnce<GoodType | RoomGoodType>(
+    firestore.collectionGroup('goods'),
+    {
+      idField: '_id'
+    }
+  )
 
   const e = error || uError
 
@@ -46,16 +49,23 @@ export const GoodList: React.FC<ListProps> = () => {
   if (loading || !goods || uLoading || !usedGoods) return null
 
   const deleteEntry = async (id: string) => {
-    await firestore.collection('goods/').doc(id).delete()
+    await firestore
+      .collection('goods/')
+      .doc(id)
+      .delete()
   }
 
-  const uGoods: string[] = usedGoods.filter(u => Object.prototype.hasOwnProperty.call(u, 'ref')).map(u => (u as RoomGoodType).ref.id)
+  const uGoods: string[] = usedGoods
+    .filter(u => Object.prototype.hasOwnProperty.call(u, 'ref'))
+    .map(u => (u as RoomGoodType).ref.id)
 
   return (
     <List>
       {goods.map(good => (
         <ListItem dense key={good._id}>
-          <ListItemText primary={<GoodListEntry good={good} onDelete={deleteEntry} isUsed={uGoods.includes(good._id)} />} />
+          <ListItemText
+            primary={<GoodListEntry good={good} onDelete={deleteEntry} isUsed={uGoods.includes(good._id)} />}
+          />
         </ListItem>
       ))}
       <ListItem dense>
