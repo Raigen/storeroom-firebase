@@ -24,7 +24,7 @@ jobs:
         REACT_APP_STORAGE_BUCKET: ${{ secrets.REACT_APP_STORAGE_BUCKET }}
       with:
         entrypoint: yarn
-        args: test
+        args: test-coverage
     - name: Build hosting
       uses: docker://node:10
       env:
@@ -44,3 +44,7 @@ jobs:
         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
       with:
         args: --only hosting
+    - name: Coveralls
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.github_token }}
