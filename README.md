@@ -1,4 +1,4 @@
-[![Coverage Status](https://coveralls.io/repos/github/Raigen/storeroom-firebase/badge.svg?branch=build/coveralls-coverage)](https://coveralls.io/github/Raigen/storeroom-firebase?branch=build/coveralls-coverage)
+[![Coverage Status](https://coveralls.io/repos/github/Raigen/storeroom-firebase/badge.svg?branch=master)](https://coveralls.io/github/Raigen/storeroom-firebase?branch=master)
 
 # Storeroom
 
