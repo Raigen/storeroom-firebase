@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render } from '@testing-library/react'
+import { act, cleanup, fireEvent, render } from '@testing-library/react'
 
 import { GoodList } from '../GoodList'
 import React from 'react'
@@ -6,13 +6,11 @@ import { firestore } from '../../firebase/firebase'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 
 export function delay(duration: number) {
-  return function() {
-    return new Promise(function(resolve, reject) {
-      setTimeout(function() {
-        resolve()
-      }, duration)
-    })
-  }
+  return new Promise(function(resolve, reject) {
+    setTimeout(function() {
+      resolve()
+    }, duration)
+  })
 }
 
 jest.mock('../Good', () => ({
@@ -30,6 +28,10 @@ jest.mock('react-firebase-hooks/firestore', () => ({
   useCollectionData: jest
     .fn()
     .mockName('useCollectionData')
+    .mockReturnValue([[], false, null]),
+  useCollectionDataOnce: jest
+    .fn()
+    .mockName('useCollectionDataOnce')
     .mockReturnValue([[], false, null])
 }))
 
@@ -48,14 +50,14 @@ it('should render the good list', function() {
     <div
       data-testid="good"
     >
-      {"good":{"_id":"1"}}
+      {"good":{"_id":"1"},"isUsed":false}
     </div>
   `)
   expect(goodItems[1]).toMatchInlineSnapshot(`
     <div
       data-testid="good"
     >
-      {"good":{"_id":"2"}}
+      {"good":{"_id":"2"},"isUsed":false}
     </div>
   `)
 })
