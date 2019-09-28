@@ -20,3 +20,5 @@ app.initializeApp(firebaseConfig)
 export const auth = app.auth()
 export const firestore = app.firestore()
 export const analytics = app.analytics()
+
+analytics.setAnalyticsCollectionEnabled(true)
