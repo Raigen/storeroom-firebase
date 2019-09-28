@@ -1,6 +1,7 @@
+import { analytics, firestore } from '../firebase/firebase'
+
 import React from 'react'
 import RoomEntry from './RoomEntry'
-import { firestore } from '../firebase/firebase'
 
 type RoomEntryControllerProps = {
   path: string
@@ -9,6 +10,7 @@ type RoomEntryControllerProps = {
 const RoomEntryController: React.FC<RoomEntryControllerProps> = ({ path }) => {
   const [name, setName] = React.useState('')
   const onSave = () => {
+    analytics.logEvent('room_create', {})
     firestore.collection(path).add({ name })
     setName('')
   }
