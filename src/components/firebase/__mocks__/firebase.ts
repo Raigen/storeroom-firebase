@@ -28,3 +28,10 @@ export const firestore = {
   collectionGroup,
   doc
 }
+
+export const analytics = {
+  logEvent: jest.fn().mockName('logEvent'),
+  setUserId: jest.fn().mockName('setUserId'),
+  setCurrentScreen: jest.fn().mockName('setCurrentScreen'),
+  setAnalyticsCollectionEnabled: jest.fn().mockName('setAnalyticsCollectionEnabled')
+}
