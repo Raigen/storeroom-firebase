@@ -1,9 +1,9 @@
 import { Theme, createStyles, makeStyles } from '@material-ui/core'
+import { analytics, firestore } from '../firebase/firebase'
 
 import { GoodEntry } from './GoodEntry'
 import { GoodListEntryController } from './GoodListEntryController'
 import React from 'react'
-import { firestore } from '../firebase/firebase'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 
 export type RoomGoodType = {
@@ -47,6 +47,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const useDeleteRoomGood = (roomPath: string) => {
   const collection = firestore.collection(`${roomPath}/goods/`)
   const callback = async (goodId: string) => {
+    analytics.logEvent('room_good_delete', {})
     return collection.doc(goodId).delete()
   }
   return callback
