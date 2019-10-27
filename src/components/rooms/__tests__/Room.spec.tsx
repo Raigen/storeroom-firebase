@@ -11,6 +11,7 @@ jest.mock('../GoodsList', () => ({
 jest.mock('../../firebase/hooks', () => ({
   useFirebaseUser: jest.fn().mockReturnValue({ uid: '1' })
 }))
+jest.mock('../../firebase/firebase')
 
 jest.mock('react-firebase-hooks/firestore', () => ({
   useDocumentData: jest

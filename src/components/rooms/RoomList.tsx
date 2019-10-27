@@ -1,6 +1,7 @@
 import * as firebaseHooks from 'react-firebase-hooks/firestore'
 
 import { IconButton, ListItemSecondaryAction } from '@material-ui/core'
+import { analytics, firestore } from '../firebase/firebase'
 
 import CancelIcon from '@material-ui/icons/CancelOutlined'
 import CheckIcon from '@material-ui/icons/CheckCircleOutline'
@@ -13,7 +14,6 @@ import React from 'react'
 import RoomEntryController from './RoomEntryController'
 import { RoomType } from './Room'
 import { Link as RouterLink } from 'react-router-dom'
-import { firestore } from '../firebase/firebase'
 import { useFirebaseUser } from '../firebase/hooks'
 
 type RoomListItemProps = {
@@ -27,7 +27,13 @@ const RoomListItem: React.FC<RoomListItemProps> = ({ room, onDelete }) => {
     <ListItem key={room._id}>
       <ListItemText
         primary={
-          <Link component={RouterLink} to={`${ROOMLIST}${room._id}`}>
+          <Link
+            component={RouterLink}
+            to={`${ROOMLIST}${room._id}`}
+            onClick={() => {
+              analytics.setCurrentScreen(room.name)
+            }}
+          >
             {room.name}
           </Link>
         }
@@ -63,6 +69,7 @@ export const RoomsList: React.FC<RoomListProps> = () => {
   })
 
   const onDelete = (id: string) => {
+    analytics.logEvent('room_delete', {})
     firestore
       .collection(collectionPath)
       .doc(id)

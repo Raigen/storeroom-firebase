@@ -1,3 +1,5 @@
+import 'firebase/auth'
+
 const docUpdate = jest
   .fn()
   .mockName('docUpdate')
@@ -27,4 +29,11 @@ export const firestore = {
   collection,
   collectionGroup,
   doc
+}
+
+export const analytics = {
+  logEvent: jest.fn().mockName('logEvent'),
+  setUserId: jest.fn().mockName('setUserId'),
+  setCurrentScreen: jest.fn().mockName('setCurrentScreen'),
+  setAnalyticsCollectionEnabled: jest.fn().mockName('setAnalyticsCollectionEnabled')
 }

@@ -7,6 +7,7 @@ import { SignIn } from '../SignIn'
 jest.mock('react-firebaseui', () => ({
   FirebaseAuth: () => <div data-testid="firebase-ui" />
 }))
+jest.mock('../../firebase/firebase')
 
 jest.mock('../../firebase/hooks', () => ({
   useFirebaseUser: jest

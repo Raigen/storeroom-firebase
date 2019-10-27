@@ -1,9 +1,9 @@
 import { Autosuggest, Suggestion } from '../Autosuggest/Autosuggest'
+import { analytics, firestore } from '../firebase/firebase'
 
 import Button from '@material-ui/core/Button'
 import { GoodAmountInputField } from './GoodAmountInputField'
 import React from 'react'
-import { firestore } from '../firebase/firebase'
 import { useCollection } from 'react-firebase-hooks/firestore'
 
 type GoodDataType = {
@@ -36,9 +36,16 @@ export const GoodEntry: React.FC<GoodEntryProps> = ({ path, initialGoodData = em
   const handleSave = async () => {
     const roomGoodsCollection = firestore.collection(`${path}/goods`)
     // use existing good or create a new one
-    const newGood = goodData.ref || (await goodsCollection.add({ name: goodData.name, unit: goodData.unit }))
+    let newGood: firebase.firestore.DocumentReference
+    if (goodData.ref) {
+      newGood = goodData.ref
+    } else {
+      newGood = await goodsCollection.add({ name: goodData.name, unit: goodData.unit })
+      analytics.logEvent('good_create', { name: goodData.name, unit: goodData.unit })
+    }
     // add good to the room
     await roomGoodsCollection.add({ amount: goodData.amount, ref: newGood })
+    analytics.logEvent('room_good_add', { name: goodData.name })
     // reset form data
     setGoodData(emptyGoodData)
   }

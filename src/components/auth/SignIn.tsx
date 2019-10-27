@@ -1,8 +1,9 @@
+import { analytics, auth } from '../firebase/firebase'
+
 import { FirebaseAuth } from 'react-firebaseui'
 import React from 'react'
 import { RouteComponentProps } from 'react-router'
 import Typography from '@material-ui/core/Typography'
-import { auth } from '../firebase/firebase'
 import firebase from 'firebase/app'
 import { useFirebaseUser } from '../firebase/hooks'
 
@@ -12,12 +13,23 @@ const uiConfig: firebaseui.auth.Config = {
   credentialHelper: 'none',
   signInFlow: 'popup',
   signInSuccessUrl: '/',
-  signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID, {
-    provider:firebase.auth.EmailAuthProvider.PROVIDER_ID,
-    requireDisplayName: false,
-  }],
+  signInOptions: [
+    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+    {
+      provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
+      requireDisplayName: false
+    }
+  ],
   callbacks: {
-    signInSuccessWithAuthResult: () => false
+    signInSuccessWithAuthResult: (result: firebase.auth.UserCredential) => {
+      if (result.additionalUserInfo!.isNewUser) {
+        analytics.logEvent('sign_up', { method: result.credential!.signInMethod })
+      } else {
+        analytics.logEvent('login', { method: result.credential!.signInMethod })
+      }
+
+      return false
+    }
   }
 }
 
