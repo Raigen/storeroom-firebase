@@ -1,3 +1,5 @@
+import 'firebase/auth'
+
 const docUpdate = jest
   .fn()
   .mockName('docUpdate')
