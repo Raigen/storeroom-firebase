@@ -1,4 +1,4 @@
-[![Coverage Status](https://coveralls.io/repos/github/Raigen/storeroom-firebase/badge.svg?branch=master)](https://coveralls.io/github/Raigen/storeroom-firebase?branch=master) [![Maintainability](https://api.codeclimate.com/v1/badges/6eb9447fa2050a3d2797/maintainability)](https://codeclimate.com/github/Raigen/storeroom-firebase/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/6eb9447fa2050a3d2797/test_coverage)](https://codeclimate.com/github/Raigen/storeroom-firebase/test_coverage) [![Maintainability](https://api.codeclimate.com/v1/badges/6eb9447fa2050a3d2797/maintainability)](https://codeclimate.com/github/Raigen/storeroom-firebase/maintainability)
 
 # Storeroom
 
