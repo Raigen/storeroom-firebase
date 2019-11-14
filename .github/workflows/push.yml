@@ -1,23 +1,20 @@
 on: push
 name: Firebase hosting
 jobs:
-  installDependencies:
-    name: Test and deploy
+  test:
+    name: Test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
       - name: Use Node.js 10.x
         uses: actions/setup-node@master
         with:
-          version: 10.x
+          node-version: 10.x
       - name: Install dependencies
-        run: |
-          yarn
+        run: yarn
       - name: Run tests
         env:
           CI: 'true'
-          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-          COVERALLS_SERVICE_NAME: Github Actions
           REACT_APP_API_KEY: ${{ secrets.REACT_APP_API_KEY }}
           REACT_APP_AUTH_DOMAIN: ${{ secrets.REACT_APP_AUTH_DOMAIN }}
           REACT_APP_DATABASE_URL: ${{ secrets.REACT_APP_DATABASE_URL }}
@@ -26,8 +23,20 @@ jobs:
           REACT_APP_STORAGE_BUCKET: ${{ secrets.REACT_APP_STORAGE_BUCKET }}
           REACT_APP_MEASUREMENT_ID: ${{ secrets.REACT_APP_MEASUREMENT_ID }}
           REACT_APP_APP_ID: ${{ secrets.REACT_APP_APP_ID }}
-        run: |
-          yarn test-coverage
+        run: yarn test
+          
+  deploy:
+    if: github.ref == 'refs/heads/master'
+    needs: [test]
+    name: Firebase Deployment
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Use Node.js 10.x
+        uses: actions/setup-node@master
+        with:
+          node-version: 10.x
+      - run: yarn install
       - name: Build hosting
         env:
           REACT_APP_API_KEY: ${{ secrets.REACT_APP_API_KEY }}
@@ -38,8 +47,7 @@ jobs:
           REACT_APP_STORAGE_BUCKET: ${{ secrets.REACT_APP_STORAGE_BUCKET }}
           REACT_APP_MEASUREMENT_ID: ${{ secrets.REACT_APP_MEASUREMENT_ID }}
           REACT_APP_APP_ID: ${{ secrets.REACT_APP_APP_ID }}
-        run: |
-          yarn build
+        run: yarn build
       - name: Deploy hosting to firebase
         if: github.ref == 'refs/heads/master'
         uses: jakejarvis/firebase-deploy-action@master
@@ -47,7 +55,28 @@ jobs:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         with:
           args: --only hosting
-      - name: Coveralls
-        uses: coverallsapp/github-action@master
+  coverage:
+    needs: [test]
+    name: Code Climate Coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Use Node.js 10.x
+        uses: actions/setup-node@master
         with:
-          github-token: ${{ secrets.github_token }}
+          node-version: 10.x
+      - run: yarn install
+      - uses: paambaati/codeclimate-action@v2.3.0
+        env:
+          CI: 'true'
+          CC_TEST_REPORTER_ID: d6c611fcd44745df6fe0f00ccdc109e4225c4c86ec63e8f47b6a7207df78f374
+          REACT_APP_API_KEY: ${{ secrets.REACT_APP_API_KEY }}
+          REACT_APP_AUTH_DOMAIN: ${{ secrets.REACT_APP_AUTH_DOMAIN }}
+          REACT_APP_DATABASE_URL: ${{ secrets.REACT_APP_DATABASE_URL }}
+          REACT_APP_MESSAGING_SENDER_ID: ${{ secrets.REACT_APP_MESSAGING_SENDER_ID }}
+          REACT_APP_PROJECT_ID: ${{ secrets.REACT_APP_PROJECT_ID }}
+          REACT_APP_STORAGE_BUCKET: ${{ secrets.REACT_APP_STORAGE_BUCKET }}
+          REACT_APP_MEASUREMENT_ID: ${{ secrets.REACT_APP_MEASUREMENT_ID }}
+          REACT_APP_APP_ID: ${{ secrets.REACT_APP_APP_ID }}
+        with:
+          coverageCommand: yarn test-coverage
