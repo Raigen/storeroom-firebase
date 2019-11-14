@@ -2,7 +2,7 @@ on: push
 name: Firebase hosting
 jobs:
   test:
-    name: Test and deploy
+    name: Test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
@@ -28,7 +28,7 @@ jobs:
   deploy:
     if: github.ref == 'refs/heads/master'
     needs: [test]
-    name: Deployment
+    name: Firebase Deployment
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
@@ -57,7 +57,7 @@ jobs:
           args: --only hosting
   coverage:
     needs: [test]
-    name: coverage
+    name: Code Climate Coverage
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
@@ -66,7 +66,7 @@ jobs:
         with:
           version: 10.x
       - run: yarn install
-      - uses: paambaati/codeclimate-action@v2.2.4
+      - uses: paambaati/codeclimate-action@v2.3.0
         env:
           CC_TEST_REPORTER_ID: d6c611fcd44745df6fe0f00ccdc109e4225c4c86ec63e8f47b6a7207df78f374
           REACT_APP_API_KEY: ${{ secrets.REACT_APP_API_KEY }}
