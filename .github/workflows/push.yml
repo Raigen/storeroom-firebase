@@ -55,6 +55,34 @@ jobs:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         with:
           args: --only hosting
+  coveralls:
+    needs: [test]
+    name: Coveralls
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Use Node.js 10.x
+        uses: actions/setup-node@master
+        with:
+          node-version: 10.x
+      - run: yarn install
+      - name: Run coverage run
+        env:
+          CI: 'true'
+          CC_TEST_REPORTER_ID: d6c611fcd44745df6fe0f00ccdc109e4225c4c86ec63e8f47b6a7207df78f374
+          REACT_APP_API_KEY: ${{ secrets.REACT_APP_API_KEY }}
+          REACT_APP_AUTH_DOMAIN: ${{ secrets.REACT_APP_AUTH_DOMAIN }}
+          REACT_APP_DATABASE_URL: ${{ secrets.REACT_APP_DATABASE_URL }}
+          REACT_APP_MESSAGING_SENDER_ID: ${{ secrets.REACT_APP_MESSAGING_SENDER_ID }}
+          REACT_APP_PROJECT_ID: ${{ secrets.REACT_APP_PROJECT_ID }}
+          REACT_APP_STORAGE_BUCKET: ${{ secrets.REACT_APP_STORAGE_BUCKET }}
+          REACT_APP_MEASUREMENT_ID: ${{ secrets.REACT_APP_MEASUREMENT_ID }}
+          REACT_APP_APP_ID: ${{ secrets.REACT_APP_APP_ID }}
+        run: yarn test-coverage
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.github_token }}
   coverage:
     needs: [test]
     name: Code Climate Coverage
