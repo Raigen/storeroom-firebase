@@ -1,19 +1,16 @@
-import { GOODLIST, LANDING, ROOM, SIGN_IN } from '../constants/routes'
+import { GOODLIST, LANDING, NEW_HOUSEHOLD, ROOM, SIGN_IN } from '../constants/routes'
 import { Route, BrowserRouter as Router } from 'react-router-dom'
 import { Theme, createStyles, makeStyles } from '@material-ui/core/styles'
 
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { GoodList } from './goods/GoodList'
+import { HomeIntro } from './HomeIntro'
+import { HouseholdForm } from './household/HouseholdForm'
 import { Navigation } from './Navigation'
 import React from 'react'
 import { Room } from './rooms/Room'
 import { SignIn } from './auth/SignIn'
 import { Topbar } from './Topbar'
-import Typography from '@material-ui/core/Typography'
-
-function Home() {
-  return <Typography>Home</Typography>
-}
 
 const drawerWidth = 200
 const useStyles = makeStyles((theme: Theme) =>
@@ -42,10 +39,11 @@ export const App = () => {
         <Navigation drawerWidth={drawerWidth} isMobileOpen={mobileOpen} handleDrawerToggle={toggleDrawer} />
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          <Route path={LANDING} exact component={Home} />
+          <Route path={LANDING} exact component={HomeIntro} />
           <Route path={ROOM} component={Room} />
           <Route path={GOODLIST} component={GoodList} />
           <Route path={SIGN_IN} component={SignIn} />
+          <Route path={NEW_HOUSEHOLD} component={HouseholdForm} />
         </main>
       </div>
     </Router>
