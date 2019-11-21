@@ -62,7 +62,7 @@ const RoomListItem: React.FC<RoomListItemProps> = ({ room, onDelete }) => {
 type RoomListProps = {}
 
 export const RoomsList: React.FC<RoomListProps> = () => {
-  const user = useFirebaseUser()
+  const { user } = useFirebaseUser()
   const collectionPath = user ? `users/${user!.uid}/rooms` : 'null'
   const [rooms, loading, error] = firebaseHooks.useCollectionData<RoomType>(firestore.collection(collectionPath), {
     idField: '_id'

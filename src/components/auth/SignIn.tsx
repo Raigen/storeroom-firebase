@@ -34,7 +34,7 @@ const uiConfig: firebaseui.auth.Config = {
 }
 
 export const SignIn: React.FC<SignInProps> = () => {
-  const user = useFirebaseUser()
+  const { user } = useFirebaseUser()
 
   if (user) {
     return <Typography>Willkommen!</Typography>

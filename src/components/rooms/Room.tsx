@@ -14,7 +14,7 @@ export type RoomType = {
 type RoomProps = RouteComponentProps<{ id: string }> & {}
 
 export const Room: React.FC<RoomProps> = ({ match }) => {
-  const user = useFirebaseUser()
+  const { user } = useFirebaseUser()
   const collectionPath = user ? `users/${user!.uid}/rooms/${match.params.id}` : 'null/1'
   const [room, loading, error] = useDocumentData<RoomType>(firestore.doc(collectionPath), {
     idField: '_id'
