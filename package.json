@@ -11,7 +11,7 @@
     "@types/react-dom": "16.9.4",
     "@types/react-router-dom": "5.1.2",
     "downshift": "3.4.1",
-    "firebase": "7.3.0",
+    "firebase": "7.4.0",
     "react": "16.11.0",
     "react-dom": "16.11.0",
     "react-firebase-hooks": "2.1.1",
