@@ -1,7 +1,9 @@
+import { MemoryRouter, RouteComponentProps } from 'react-router'
 import { cleanup, render } from '@testing-library/react'
 
+import { LANDING } from '../../../constants/routes'
 import React from 'react'
-import { RouteComponentProps } from 'react-router'
+import { Route } from 'react-router-dom'
 import { SignIn } from '../SignIn'
 import { useFirebaseUser } from '../../firebase/hooks'
 
@@ -22,7 +24,12 @@ it('should render login form when not logged in', function() {
 })
 
 it('should render welcome message for logged in users', function() {
-  const { queryByTestId, getByText } = render(<SignIn {...mockRouterProps} />)
+  const { queryByTestId, getByText } = render(
+    <MemoryRouter>
+      <Route path={LANDING} render={() => <div>Landing!</div>} />
+      <SignIn {...mockRouterProps} />
+    </MemoryRouter>
+  )
   expect(queryByTestId('firebase-ui')).toBeNull()
-  expect(getByText('Willkommen!')).toBeTruthy()
+  expect(getByText('Landing!')).toBeTruthy()
 })
