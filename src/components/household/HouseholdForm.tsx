@@ -4,11 +4,6 @@ import TextField from '@material-ui/core/TextField'
 import { firestore } from '../firebase/firebase'
 import { useFirebaseUser } from '../firebase/hooks'
 
-type Household = {
-  name: String
-  users: String[]
-}
-
 export const HouseholdForm: React.FC = () => {
   const { user } = useFirebaseUser()
   const [name, setName] = React.useState('')
@@ -20,7 +15,13 @@ export const HouseholdForm: React.FC = () => {
   }
   return (
     <>
-      <TextField label="Name" margin="normal" onChange={event => setName(event.target.value)} value={name} />
+      <TextField
+        label="Name"
+        placeholder="Name"
+        margin="normal"
+        onChange={event => setName(event.target.value)}
+        value={name}
+      />
       <Button variant="contained" disabled={name.length === 0} onClick={submitHandler}>
         Speichern
       </Button>

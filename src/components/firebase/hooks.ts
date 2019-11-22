@@ -33,10 +33,9 @@ export function useFirebaseUser(): { userData: UserData | null; user: firebase.U
   return { user, userData }
 }
 
-type Household = {
+export type Household = {
   id: string
   users: String[]
-  rooms: any[]
 }
 
 export function useHousehold(): { household: Household | null; rooms: RoomType[] } {
