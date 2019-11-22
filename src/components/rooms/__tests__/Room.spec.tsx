@@ -8,9 +8,7 @@ import { useDocumentData } from 'react-firebase-hooks/firestore'
 jest.mock('../GoodsList', () => ({
   GoodsList: (props: any) => <div data-testid="goods-list">{JSON.stringify(props)}</div>
 }))
-jest.mock('../../firebase/hooks', () => ({
-  useFirebaseUser: jest.fn().mockReturnValue({ uid: '1' })
-}))
+jest.mock('../../firebase/hooks')
 jest.mock('../../firebase/firebase')
 
 jest.mock('react-firebase-hooks/firestore', () => ({
@@ -38,7 +36,7 @@ it('should render the room name and good list', function() {
     <div
       data-testid="goods-list"
     >
-      {"path":"users/1/rooms/1"}
+      {"path":"households/1/rooms/1"}
     </div>
   `)
 })

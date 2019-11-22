@@ -1,9 +1,10 @@
 import { analytics, auth } from '../firebase/firebase'
 
 import { FirebaseAuth } from 'react-firebaseui'
+import { LANDING } from '../../constants/routes'
 import React from 'react'
+import { Redirect } from 'react-router-dom'
 import { RouteComponentProps } from 'react-router'
-import Typography from '@material-ui/core/Typography'
 import firebase from 'firebase/app'
 import { useFirebaseUser } from '../firebase/hooks'
 
@@ -34,10 +35,10 @@ const uiConfig: firebaseui.auth.Config = {
 }
 
 export const SignIn: React.FC<SignInProps> = () => {
-  const user = useFirebaseUser()
+  const { user } = useFirebaseUser()
 
   if (user) {
-    return <Typography>Willkommen!</Typography>
+    return <Redirect to={LANDING} />
   } else {
     return <FirebaseAuth firebaseAuth={auth} uiConfig={uiConfig} />
   }

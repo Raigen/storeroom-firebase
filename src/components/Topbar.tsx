@@ -42,7 +42,7 @@ const SignOutButton: React.FunctionComponent = () => (
 
 export const Topbar: React.FunctionComponent<TopbarPropTypes> = props => {
   const classes = useStyles(props)
-  const user = useFirebaseUser()
+  const { user } = useFirebaseUser()
 
   return (
     <AppBar position="fixed" className={classes.appBar}>

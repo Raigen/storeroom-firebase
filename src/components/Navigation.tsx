@@ -36,7 +36,7 @@ const useStyles = makeStyles<Theme, NavigationPropTypes>(theme =>
 
 export const Navigation: React.FunctionComponent<NavigationPropTypes> = props => {
   const classes = useStyles(props)
-  const user = useFirebaseUser()
+  const { user } = useFirebaseUser()
   const { isMobileOpen, handleDrawerToggle } = props
   const drawer = (
     <>

@@ -5,13 +5,7 @@ import React from 'react'
 import { RoomsList } from '../RoomList'
 import { firestore } from '../../firebase/firebase'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
-
-jest.mock('../../firebase/hooks', () => ({
-  useFirebaseUser: jest
-    .fn()
-    .mockReturnValueOnce(null)
-    .mockReturnValue({ uid: '1' })
-}))
+import { useFirebaseUser } from '../../firebase/hooks'
 
 jest.mock('react-firebase-hooks/firestore', () => ({
   useCollectionData: jest
@@ -21,12 +15,17 @@ jest.mock('react-firebase-hooks/firestore', () => ({
 }))
 
 jest.mock('../../firebase/firebase')
+jest.mock('../../firebase/hooks')
 
 afterEach(cleanup)
 
-const rooms = [{ _id: '1', name: 'Test 1' }, { _id: '2', name: 'Test 2' }]
+const rooms = [
+  { _id: '1', name: 'Test 1' },
+  { _id: '2', name: 'Test 2' }
+]
 
 it('should render nothing when not logged in', function() {
+  ;(useFirebaseUser as jest.Mock).mockReturnValueOnce({ user: null, userData: null })
   const { container } = render(
     <MemoryRouter>
       <RoomsList />
@@ -36,7 +35,7 @@ it('should render nothing when not logged in', function() {
 })
 
 it('should render the room list of the logged in user', function() {
-  ;(useCollectionData as any).mockReturnValueOnce([rooms, false, null])
+  ;(useCollectionData as jest.Mock).mockReturnValueOnce([rooms, false, null])
   const { getByText, getByPlaceholderText } = render(
     <MemoryRouter>
       <RoomsList />
@@ -48,7 +47,7 @@ it('should render the room list of the logged in user', function() {
 })
 
 it('should delete the first room', function() {
-  ;(useCollectionData as any).mockReturnValueOnce([rooms, false, null])
+  ;(useCollectionData as jest.Mock).mockReturnValueOnce([rooms, false, null])
   const { getByTitle, getAllByTitle } = render(
     <MemoryRouter>
       <RoomsList />
@@ -61,7 +60,7 @@ it('should delete the first room', function() {
 })
 
 it('should cancel the deletion', function() {
-  ;(useCollectionData as any).mockReturnValueOnce([rooms, false, null])
+  ;(useCollectionData as jest.Mock).mockReturnValueOnce([rooms, false, null])
   const { getByTitle, getAllByTitle } = render(
     <MemoryRouter>
       <RoomsList />
@@ -74,7 +73,7 @@ it('should cancel the deletion', function() {
 })
 
 it('should render the database error', function() {
-  ;(useCollectionData as any).mockReturnValueOnce([null, false, new Error('Test error')])
+  ;(useCollectionData as jest.Mock).mockReturnValueOnce([null, false, new Error('Test error')])
   const { getByText } = render(
     <MemoryRouter>
       <RoomsList />
@@ -84,7 +83,7 @@ it('should render the database error', function() {
 })
 
 it('should render nothing on loading', function() {
-  ;(useCollectionData as any).mockReturnValueOnce([null, true, null])
+  ;(useCollectionData as jest.Mock).mockReturnValueOnce([null, true, null])
   const { container } = render(
     <MemoryRouter>
       <RoomsList />
@@ -94,7 +93,7 @@ it('should render nothing on loading', function() {
 })
 
 it('should render the entry field with empty rooms', function() {
-  ;(useCollectionData as any).mockReturnValueOnce([[], false, null])
+  ;(useCollectionData as jest.Mock).mockReturnValueOnce([[], false, null])
   const { getByPlaceholderText } = render(
     <MemoryRouter>
       <RoomsList />

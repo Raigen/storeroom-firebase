@@ -3,14 +3,9 @@ import { cleanup, fireEvent, render } from '@testing-library/react'
 import React from 'react'
 import { Topbar } from '../Topbar'
 import { auth } from '../firebase/firebase'
+import { useFirebaseUser } from '../firebase/hooks'
 
-jest.mock('../firebase/hooks', () => ({
-  useFirebaseUser: jest
-    .fn()
-    .mockReturnValueOnce(null)
-    .mockReturnValueOnce({ uid: '1' })
-    .mockReturnValueOnce({ uid: '1' })
-}))
+jest.mock('../firebase/hooks')
 
 jest.mock('../firebase/firebase', () => ({
   auth: {
@@ -23,6 +18,7 @@ const handleDrawer = () => {}
 afterEach(cleanup)
 
 it('renders no logout button when not logged in', function() {
+  ;(useFirebaseUser as jest.Mock).mockReturnValueOnce({ user: null, userData: null })
   const { queryByText } = render(<Topbar drawerWidth={100} handleDrawerToggle={handleDrawer} />)
 
   expect(queryByText('Abmelden')).toBeNull()
