@@ -1,5 +1,5 @@
 import { analytics, auth, firestore } from './firebase'
-import { useCollectionData, useDocumentDataOnce } from 'react-firebase-hooks/firestore'
+import { useCollectionData, useDocumentData } from 'react-firebase-hooks/firestore'
 
 import React from 'react'
 import { RoomType } from '../rooms/Room'
@@ -16,8 +16,8 @@ export function useFirebaseUser(): { userData: UserData | null; user: firebase.U
   const [user, setUser] = React.useState<firebase.User | null>(null)
 
   const docRef = user ? firestore.doc(`users/${user.uid}`) : null
-  const [userData = null, , error] = useDocumentDataOnce<UserData>(docRef)
-  if (error) console.error(error)
+  const [userData = null, , error] = useDocumentData<UserData>(docRef)
+  if (error) console.error('useFirebaseUser', error)
   React.useEffect(() => {
     const unregisterAuthObserver = auth.onAuthStateChanged(user => {
       setUser(user)
@@ -41,8 +41,11 @@ export type Household = {
 export function useHousehold(): { household: Household | null; rooms: RoomType[] } {
   const { userData } = useFirebaseUser()
 
-  const householdRef = userData ? firestore.doc(`households/${userData.activeHousehold}`) : null
-  const [household = null] = useDocumentDataOnce<Household>(householdRef, { idField: 'id' })
+  const householdRef =
+    userData && userData.activeHousehold ? firestore.doc(`households/${userData.activeHousehold}`) : null
+  const [household = null, , error] = useDocumentData<Household>(householdRef, { idField: 'id' })
+
+  if (error) console.error('useHousehold', error)
 
   const roomRef = household ? firestore.collection(`households/${household.id}/rooms`) : null
   const [rooms = []] = useCollectionData<RoomType>(roomRef, { idField: '_id' })

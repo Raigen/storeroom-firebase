@@ -27,9 +27,9 @@ export const RoomsList: React.FC<RoomListProps> = () => {
       .delete()
   }
 
+  if (!household) return <div>Noch kein Haushalt ausgewählt</div>
   if (error) return <div>Fehler: {error.message}</div>
   if (!user || loading || !rooms) return null
-  if (!household) return <div>Noch kein Haushalt ausgewählt</div>
   return (
     <>
       {rooms.map(room => (
