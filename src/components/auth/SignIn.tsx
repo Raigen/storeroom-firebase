@@ -1,4 +1,4 @@
-import { analytics, auth } from '../firebase/firebase'
+import { analytics, auth, firestore } from '../firebase/firebase'
 
 import { FirebaseAuth } from 'react-firebaseui'
 import { LANDING } from '../../constants/routes'
@@ -24,6 +24,7 @@ const uiConfig: firebaseui.auth.Config = {
   callbacks: {
     signInSuccessWithAuthResult: (result: firebase.auth.UserCredential) => {
       if (result.additionalUserInfo!.isNewUser) {
+        firestore.doc(`users/${result.user!.uid}`).set({ admin: false })
         analytics.logEvent('sign_up', { method: result.credential!.signInMethod })
       } else {
         analytics.logEvent('login', { method: result.credential!.signInMethod })
