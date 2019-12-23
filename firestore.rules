@@ -1,3 +1,4 @@
+rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
   	function signedIn() {
@@ -6,11 +7,37 @@ service cloud.firestore {
     function signedInUser(uid) {
     return signedIn() && request.auth.uid == uid;
     }
-    match /goods/{good=**} {
-      allow read, write: if signedIn()
+    function isAdmin(uid) {
+    	return get(/databases/$(database)/documents/users/$(uid)).data.admin == true;
     }
-    match /users/{uid}/{rooms=**} {
-      allow read, write: if signedInUser(uid);
+    function canAccessHousehold(hid, uid) {
+    	return (uid in get(/databases/$(database)/documents/households/$(hid)).data.users) == true;
+    }
+    function isIn(key, data) {
+    	return (key in data) == true;
+    }
+
+    match /goods/{good=**} {
+      allow read, create: if signedIn();
+      allow delete, update: if isAdmin(request.auth.uid);
+    }
+    match /users/{uid} {
+      allow read: if signedInUser(uid);
+      allow read: if isIn(request.auth.uid, resource.data.grantedUsers);
+      allow create: if signedInUser(uid) && request.resource.data.admin == false;
+      allow update: if signedInUser(uid) && resource.data.admin == request.resource.data.admin;
+    }
+
+    match /households/{hid} {
+    	allow create: if signedIn();
+    	allow read, write: if signedIn() && canAccessHousehold(hid, request.auth.uid);
+      match /{any=**} {
+        allow read, write: if signedIn() && canAccessHousehold(hid, request.auth.uid);
+      }
+    }
+
+    match /invites/{invite=**} {
+    	allow create, read: if signedIn();
     }
   }
 }

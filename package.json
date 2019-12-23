@@ -11,7 +11,7 @@
     "@types/react-dom": "16.9.4",
     "@types/react-router-dom": "5.1.3",
     "downshift": "3.4.8",
-    "firebase": "7.6.0",
+    "firebase": "7.6.1",
     "react": "16.12.0",
     "react-dom": "16.12.0",
     "react-firebase-hooks": "2.1.1",
@@ -25,6 +25,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "test-coverage": "react-scripts test --coverage",
+    "test-rules": "firebase emulators:exec --only firestore \"jest rules\"",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -43,9 +44,12 @@
     ]
   },
   "devDependencies": {
+    "@firebase/testing": "^0.16.4",
     "@testing-library/jest-dom": "4.2.4",
     "@testing-library/react": "9.4.0",
     "firebase-tools": "7.10.0",
-    "prettier": "1.19.1"
+    "jest": "^24.9.0",
+    "prettier": "1.19.1",
+    "ts-jest": "^24.2.0"
   }
 }
