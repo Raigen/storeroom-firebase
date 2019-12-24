@@ -25,6 +25,34 @@ jobs:
           REACT_APP_APP_ID: ${{ secrets.REACT_APP_APP_ID }}
         run: yarn test && yarn test-rules
 
+  testing:
+    name: Just testing
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Use Node.js 10.x
+        uses: actions/setup-node@master
+        with:
+          node-version: 10.x
+      - name: check hosting files
+        id: hostingcheck
+        run: |
+          git diff --name-only $GITHUB_HEAD_REF $GITHUB_BASE_REF |
+          grep 'src' |
+          wc -l |
+          xargs -I{} echo "::set-output name=HOSTING::{}"
+      - name: T
+        if: steps.hostingcheck.outputs.HOSTING != '0'
+        run: |
+          echo "True"
+      - name: F
+        if: steps.hostingcheck.outputs.HOSTING == '0'
+        run: |
+          echo "False"
+      - name: C
+        run: |
+          echo "Check"
+
   deploy:
     if: github.ref == 'refs/heads/master'
     needs: [test]
@@ -36,8 +64,17 @@ jobs:
         uses: actions/setup-node@master
         with:
           node-version: 10.x
+      - name: check hosting files
+        id: hostingcheck
+        run: |
+          git diff --name-only $GITHUB_HEAD_REF $GITHUB_BASE_REF |
+          grep 'src' |
+          wc -l |
+          xargs -I{} echo "::set-output name=HOSTING::{}"
       - run: yarn install
+        if: steps.hostingcheck.outputs.HOSTING != '0'
       - name: Build hosting
+        if: steps.hostingcheck.outputs.HOSTING != '0'
         env:
           REACT_APP_API_KEY: ${{ secrets.REACT_APP_API_KEY }}
           REACT_APP_AUTH_DOMAIN: ${{ secrets.REACT_APP_AUTH_DOMAIN }}
@@ -49,7 +86,7 @@ jobs:
           REACT_APP_APP_ID: ${{ secrets.REACT_APP_APP_ID }}
         run: yarn build
       - name: Deploy hosting to firebase
-        if: github.ref == 'refs/heads/master'
+        if: steps.hostingcheck.outputs.HOSTING != '0'
         uses: jakejarvis/firebase-deploy-action@master
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
