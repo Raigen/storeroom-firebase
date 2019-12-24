@@ -34,6 +34,11 @@ jobs:
         uses: actions/setup-node@master
         with:
           node-version: 10.x
+      - name: check git
+        run: |
+          echo $GITHUB_HEAD_REF |
+          echo $GITHUB_BASE_REF |
+          echo git diff $GITHUB_HEAD_REF $GITHUB_BASE_REF
       - name: check hosting files
         id: hostingcheck
         run: |
