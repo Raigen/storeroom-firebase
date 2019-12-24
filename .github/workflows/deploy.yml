@@ -1,0 +1,17 @@
+name: Hosting deploy
+on:
+  push:
+    paths:
+      - 'src/**'
+      - '!src/package.json'
+jobs:
+  test:
+    name: Testing
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Use Node.js 10.x
+        uses: actions/setup-node@master
+        with:
+          node-version: 10.x
+      - run: echo 'Only on src changes'

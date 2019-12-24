@@ -24,37 +24,6 @@ jobs:
           REACT_APP_MEASUREMENT_ID: ${{ secrets.REACT_APP_MEASUREMENT_ID }}
           REACT_APP_APP_ID: ${{ secrets.REACT_APP_APP_ID }}
         run: yarn test && yarn test-rules
-
-  testing:
-    name: Just testing
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
-      - name: Use Node.js 10.x
-        uses: actions/setup-node@master
-        with:
-          node-version: 10.x
-      - run: echo $GITHUB_HEAD_REF $GITHUB_BASE_REF
-      - run: echo $(git diff $GITHUB_HEAD_REF $GITHUB_BASE_REF)
-      - name: check hosting files
-        id: hostingcheck
-        run: |
-          git diff --name-only $GITHUB_HEAD_REF $GITHUB_BASE_REF |
-          grep 'src' |
-          wc -l |
-          xargs -I{} echo "::set-output name=HOSTING::{}"
-      - name: T
-        if: steps.hostingcheck.outputs.HOSTING != '0'
-        run: |
-          echo "True"
-      - name: F
-        if: steps.hostingcheck.outputs.HOSTING == '0'
-        run: |
-          echo "False"
-      - name: C
-        run: |
-          echo "Check"
-
   deploy:
     if: github.ref == 'refs/heads/master'
     needs: [test]
