@@ -70,14 +70,14 @@ interface RenderSuggestionProps {
   highlightedIndex: number | null
   index: number
   itemProps: MenuItemProps<'div', { button?: never }>
-  selectedItem: Suggestion['name']
+  selectedItem: Suggestion | null
   suggestion: Suggestion
 }
 
 function renderSuggestion(suggestionProps: RenderSuggestionProps) {
   const { suggestion, index, itemProps, highlightedIndex, selectedItem } = suggestionProps
   const isHighlighted = highlightedIndex === index
-  const isSelected = (selectedItem || '').indexOf(suggestion.name) > -1
+  const isSelected = (selectedItem ? selectedItem.name : '').indexOf(suggestion.name) > -1
 
   return (
     <MenuItem
@@ -129,7 +129,10 @@ export const Autosuggest: React.FC<AutoSuggestProps> = props => {
     onChange(oldSuggestion ? oldSuggestion : { name: value, ref: undefined })
   }
   return (
-    <Downshift id="downshift-simple" onChange={handleChange}>
+    <Downshift<Suggestion>
+      id="downshift-simple"
+      onChange={selectedItem => handleChange(selectedItem ? selectedItem.name : '')}
+    >
       {({
         getInputProps,
         getItemProps,
@@ -165,7 +168,7 @@ export const Autosuggest: React.FC<AutoSuggestProps> = props => {
                       renderSuggestion({
                         suggestion,
                         index,
-                        itemProps: getItemProps({ item: suggestion.name }),
+                        itemProps: getItemProps({ item: suggestion }),
                         highlightedIndex,
                         selectedItem
                       })
