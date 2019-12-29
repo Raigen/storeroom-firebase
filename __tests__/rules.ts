@@ -65,10 +65,32 @@ describe('goods', function() {
 
 describe('invites', function() {
   it('signed in users can access and create invites', async function() {
+    const adminDb = getAdminApp()
+    const differentOwnerInvite = await adminDb.collection('/invites').add({ ownerId: '456' })
+
     const db = getApp({ uid: '123' })
     const doc = db.collection('invites').doc('1')
-    await firebase.assertSucceeds(doc.set({ email: 'test@domain.com' }))
+    await firebase.assertSucceeds(doc.set({ email: 'test@domain.com', ownerId: '123' }))
     await firebase.assertSucceeds(doc.get())
+    await firebase.assertSucceeds(
+      db
+        .collection('/invites')
+        .doc(differentOwnerInvite.id)
+        .get()
+    )
+  })
+  it('owners can list only their invites', async function() {
+    const adminDb = getAdminApp()
+    await adminDb.collection('/invites').add({ ownerId: '456' })
+    await adminDb.collection('/invites').add({ ownerId: '456' })
+    await adminDb.collection('/invites').add({ ownerId: '789' })
+
+    const db = getApp({ uid: '123' })
+    const collection = db.collection('/invites')
+    await collection.add({ ownerId: '123' })
+    await collection.add({ ownerId: '123' })
+    await firebase.assertSucceeds(collection.where('ownerId', '==', '123').get())
+    await firebase.assertFails(collection.get())
   })
 })
 

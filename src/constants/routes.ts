@@ -9,3 +9,5 @@ export const ROOM = '/rooms/:id'
 export const GOODLIST = '/goods/'
 
 export const NEW_HOUSEHOLD = '/households/form'
+
+export const INVITATIONLIST = '/invitations'

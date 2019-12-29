@@ -1,0 +1,35 @@
+name: Rules deploy
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'firestore.rules'
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Use Node.js 10.x
+        uses: actions/setup-node@master
+        with:
+          node-version: 10.x
+      - name: Install dependencies
+        run: yarn
+      - name: Run tests
+        env:
+          CI: 'true'
+        run: yarn test-rules
+  deploy:
+    needs: [test]
+    name: Firebase Deployment
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Deploy rules to firebase
+        uses: jakejarvis/firebase-deploy-action@master
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        with:
+          args: --only firestore:rules
