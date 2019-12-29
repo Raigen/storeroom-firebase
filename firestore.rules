@@ -36,8 +36,10 @@ service cloud.firestore {
       }
     }
 
-    match /invites/{invite=**} {
-    	allow create, read: if signedIn();
+    match /invites/{invite} {
+    	allow create: if signedIn() && request.auth.uid == request.resource.data.ownerId;
+      allow list: if signedIn() && request.auth.uid == resource.data.ownerId;
+    	allow get: if signedIn();
     }
   }
 }
