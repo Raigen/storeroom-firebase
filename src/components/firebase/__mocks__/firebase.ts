@@ -17,11 +17,15 @@ export const collectionAdd = jest
   .fn()
   .mockName('collectionAdd')
   .mockImplementation(() => null)
+export const collectionWhere = jest
+  .fn()
+  .mockName('where')
+  .mockReturnValue({ add: collectionAdd, doc })
 
 export const collection = jest
   .fn()
   .mockName('collection')
-  .mockReturnValue({ add: collectionAdd, doc })
+  .mockReturnValue({ add: collectionAdd, doc, where: collectionWhere })
 
 export const collectionGroup = jest.fn().mockName('collectionGroup')
 

@@ -1,4 +1,4 @@
-import { Button, Typography } from '@material-ui/core'
+import { Button, List, ListItem, Typography } from '@material-ui/core'
 
 import React from 'react'
 import { firestore } from '../firebase/firebase'
@@ -36,11 +36,11 @@ export const InvitationList: React.FC = () => {
   return (
     <div>
       <Typography variant="h3">Einladungen</Typography>
-      <ul>
+      <List>
         {invitations.map(invite => (
-          <li key={invite.id}>{invite.id}</li>
+          <ListItem key={invite.id}>{invite.id}</ListItem>
         ))}
-      </ul>
+      </List>
       <Button onClick={addInvitationHandler}>Neue Einladung</Button>
     </div>
   )
