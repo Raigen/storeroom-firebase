@@ -1,8 +1,8 @@
+import { GOODLIST, INVITATIONLIST } from '../constants/routes'
 import { Theme, createStyles, makeStyles } from '@material-ui/core/styles'
 
 import Divider from '@material-ui/core/Divider'
 import Drawer from '@material-ui/core/Drawer'
-import { GOODLIST } from '../constants/routes'
 import Hidden from '@material-ui/core/Hidden'
 import Link from '@material-ui/core/Link'
 import List from '@material-ui/core/List'
@@ -49,6 +49,16 @@ export const Navigation: React.FunctionComponent<NavigationPropTypes> = props =>
             primary={
               <Link component={RouterLink} to={GOODLIST}>
                 Waren
+              </Link>
+            }
+          />
+        </ListItem>
+        <Divider />
+        <ListItem>
+          <ListItemText
+            primary={
+              <Link component={RouterLink} to={INVITATIONLIST}>
+                Einladungen
               </Link>
             }
           />
