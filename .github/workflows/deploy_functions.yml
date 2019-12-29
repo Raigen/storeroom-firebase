@@ -1,0 +1,42 @@
+name: Functions deploy
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'functions/src/**'
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Use Node.js 10.x
+        uses: actions/setup-node@master
+        with:
+          node-version: 10.x
+      - name: Install dependencies
+        working-directory: ./functions
+        run: yarn
+      - name: Run tests
+        working-directory: ./functions
+        run: yarn test
+  deploy:
+    needs: [test]
+    name: Firebase Deployment
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Use Node.js 10.x
+        uses: actions/setup-node@master
+        with:
+          node-version: 10.x
+      - name: Install dependencies
+        working-directory: ./functions
+        run: yarn
+      - name: Deploy functions to firebase
+        uses: jakejarvis/firebase-deploy-action@master
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        with:
+          args: --only functions
