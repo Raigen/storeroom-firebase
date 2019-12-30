@@ -28,5 +28,5 @@ export const acceptInvite = functions.https.onCall(async (data: AcceptInviteData
 
   await inviteData.ref.update({ used: true })
   await household.ref.update({ users: [...household.get('users'), data.uid] })
-  await user.ref.update({ grantedUsers: [...user.get('grantedUsers'), household.get('ownerId')] })
+  await user.ref.update({ grantedUsers: [...user.get('grantedUsers'), household.get('owner')] })
 })
