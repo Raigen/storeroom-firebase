@@ -1,3 +1,4 @@
+// tslint:disable-next-line: no-implicit-dependencies
 import * as functions from 'firebase-functions-test'
 import * as requests from '../index'
 

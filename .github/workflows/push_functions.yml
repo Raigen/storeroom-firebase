@@ -1,0 +1,45 @@
+name: Test functions
+on:
+  push:
+    paths:
+      - 'functions/src/**'
+  pull_request:
+    paths:
+      - 'functions/src/**'
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Use Node.js 10.x
+        uses: actions/setup-node@master
+        with:
+          node-version: 10.x
+      - name: Install dependencies
+        working-directory: ./functions
+        run: yarn
+      - name: Run tests
+        working-directory: ./functions
+        run: yarn test
+
+  coveralls:
+    needs: [test]
+    name: Coveralls
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Use Node.js 10.x
+        uses: actions/setup-node@master
+        with:
+          node-version: 10.x
+      - run: yarn install
+        working-directory: ./functions
+      - name: Run coverage run
+        working-directory: ./functions
+        run: yarn test-coverage
+      - name: Coveralls
+        working-directory: ./functions
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.github_token }}
