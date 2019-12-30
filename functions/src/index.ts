@@ -8,7 +8,7 @@ type AcceptInviteData = {
   inviteId: string
 }
 
-export const acceptInvite = functions.https.onCall(async (data: AcceptInviteData, context) => {
+export const acceptInvite = functions.region('europe-west1').https.onCall(async (data: AcceptInviteData, context) => {
   if (!context.auth?.uid) throw new Error('Not authenticated')
 
   const db = admin.firestore()

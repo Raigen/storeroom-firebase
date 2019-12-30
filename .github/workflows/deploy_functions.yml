@@ -34,6 +34,9 @@ jobs:
       - name: Install dependencies
         working-directory: ./functions
         run: yarn
+      - name: Set node engine
+        working-directory: ./functions
+        run: sed -i 's/>=10/10/g' package.json
       - name: Deploy functions to firebase
         uses: jakejarvis/firebase-deploy-action@master
         env:
