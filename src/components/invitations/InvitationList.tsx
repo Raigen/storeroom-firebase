@@ -5,7 +5,7 @@ import { firestore } from '../firebase/firebase'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 import { useFirebaseUser } from '../firebase/hooks'
 
-type Invitation = {
+export type Invitation = {
   id: string
   email?: string
   household: string

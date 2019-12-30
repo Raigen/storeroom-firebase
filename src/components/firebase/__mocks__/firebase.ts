@@ -41,3 +41,8 @@ export const analytics = {
   setCurrentScreen: jest.fn().mockName('setCurrentScreen'),
   setAnalyticsCollectionEnabled: jest.fn().mockName('setAnalyticsCollectionEnabled')
 }
+
+export const acceptInvite = jest.fn().mockName('acceptInvite')
+export const functions = {
+  httpsCallable: () => acceptInvite
+}

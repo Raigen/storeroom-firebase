@@ -1,0 +1,31 @@
+import { Button, Typography } from '@material-ui/core'
+import { acceptInvite, firestore } from '../firebase/firebase'
+
+import { Invitation } from './InvitationList'
+import React from 'react'
+import { useDocumentDataOnce } from 'react-firebase-hooks/firestore'
+import { useFirebaseUser } from '../firebase/hooks'
+import { useLocation } from 'react-router'
+
+export const PendingInvitations: React.FC = () => {
+  const location = useLocation()
+  const queries = new URLSearchParams(location.search)
+
+  const inviteId = queries.get('inviteId') || ''
+  const { user, userData } = useFirebaseUser()
+  const [invite, loading, error] = useDocumentDataOnce<Invitation>(firestore.collection('/invitations').doc(inviteId))
+  if (!user || !userData || !invite || loading || error) return null
+
+  const acceptHandler = async () => await acceptInvite({ uid: user.uid, inviteId })
+
+  return (
+    <div>
+      <Typography variant="h5">Ausstehende Einladung</Typography>
+      <Typography>Der Besitzer vom Haushalt bekommt Zugang zu folgenden Daten:</Typography>
+      <ul>
+        <li>Anzeigename ({userData.name})</li>
+      </ul>
+      <Button onClick={acceptHandler}>Annehmen</Button>
+    </div>
+  )
+}
