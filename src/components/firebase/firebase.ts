@@ -1,6 +1,7 @@
 import 'firebase/auth'
 import 'firebase/firestore'
 import 'firebase/analytics'
+import 'firebase/functions'
 
 import app from 'firebase/app'
 
@@ -20,5 +21,7 @@ app.initializeApp(firebaseConfig)
 export const auth = app.auth()
 export const firestore = app.firestore()
 export const analytics = app.analytics()
+export const functions = app.functions()
+export const acceptInvite = functions.httpsCallable('acceptInvite')
 
 analytics.setAnalyticsCollectionEnabled(true)

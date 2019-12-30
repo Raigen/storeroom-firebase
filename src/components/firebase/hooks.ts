@@ -8,6 +8,10 @@ import { __RouterContext } from 'react-router'
 
 type UserData = {
   admin: boolean
+  name: string
+  email: string
+  picture: string
+  grantedUsers: string[]
   activeHousehold?: string
 }
 

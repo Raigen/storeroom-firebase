@@ -1,4 +1,4 @@
-import { act, cleanup, fireEvent, render } from '@testing-library/react'
+import { cleanup, fireEvent, render, wait } from '@testing-library/react'
 
 import { GoodList } from '../GoodList'
 import React from 'react'
@@ -39,7 +39,6 @@ jest.mock('../../firebase/firebase')
 
 afterEach(cleanup)
 
-const path = '/users/1/rooms/1'
 const goods = [{ _id: '1' }, { _id: '2' }]
 
 it('should render the good list', function() {
@@ -80,7 +79,7 @@ it('should add a new good', async function() {
   fireEvent.change(getByPlaceholderText('kg'), { target: { value: 'g' } })
   fireEvent.submit(getByTestId('goodForm'))
 
-  await delay(1)
+  await wait()
 
   expect((getByPlaceholderText('Zucker') as HTMLInputElement).value).toEqual('')
   expect((getByPlaceholderText('kg') as HTMLInputElement).value).toEqual('')
