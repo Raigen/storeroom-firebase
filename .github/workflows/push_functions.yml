@@ -39,7 +39,7 @@ jobs:
         working-directory: ./functions
         run: yarn test-coverage
       - name: Coveralls
-        working-directory: ./functions
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.github_token }}
+          path-to-lcov: './functions/coverage/lcov.info'
