@@ -26,7 +26,15 @@ export const acceptInvite = functions.region('europe-west1').https.onCall(async 
     .doc(data.uid)
     .get()
 
+  if (inviteData.get('used')) throw new Error('Invite already used')
+
+  const grantedUsers: string[] = user.get('grantedUsers') || []
+  const householdId = inviteData.get('household')
+
   await inviteData.ref.update({ used: true })
   await household.ref.update({ users: [...household.get('users'), data.uid] })
-  await user.ref.update({ grantedUsers: [...user.get('grantedUsers'), household.get('owner')] })
+  await user.ref.update({
+    activeHousehold: householdId,
+    grantedUsers: [...grantedUsers, household.get('owner')]
+  })
 })

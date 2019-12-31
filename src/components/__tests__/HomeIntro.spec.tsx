@@ -9,6 +9,9 @@ import { Route } from 'react-router-dom'
 import { render } from '@testing-library/react'
 
 jest.mock('../firebase/hooks')
+jest.mock('../invitations/PendingInvitation', () => ({
+  PendingInvitations: () => <div data-testid="invites" />
+}))
 
 const renderWithProvider = (ui: JSX.Element) =>
   render(

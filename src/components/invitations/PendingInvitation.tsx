@@ -11,12 +11,19 @@ export const PendingInvitations: React.FC = () => {
   const location = useLocation()
   const queries = new URLSearchParams(location.search)
 
-  const inviteId = queries.get('inviteId') || ''
+  const inviteId = queries.get('inviteId') || 'none'
   const { user, userData } = useFirebaseUser()
-  const [invite, loading, error] = useDocumentDataOnce<Invitation>(firestore.collection('/invitations').doc(inviteId))
-  if (!user || !userData || !invite || loading || error) return null
+  const [invite, loading, error] = useDocumentDataOnce<Invitation>(firestore.doc(`/invites/${inviteId}`))
+  if (error) return <div>{error.message}</div>
+  if (!user || !userData || !invite || loading || invite.used || Boolean(userData.activeHousehold)) return null
 
-  const acceptHandler = async () => await acceptInvite({ uid: user.uid, inviteId })
+  const acceptHandler = async () => {
+    try {
+      await acceptInvite({ uid: user.uid, inviteId })
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   return (
     <div>

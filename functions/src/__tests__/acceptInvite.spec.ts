@@ -13,7 +13,7 @@ jest.mock('firebase-admin', () => ({
 
 const invite = { email: '', household: '1', ownerId: '1', used: false }
 const household = { name: 'Test', owner: '1', users: ['1'] }
-const user = { admin: false, email: 'test@domain.de', name: 'Test', grantedUsers: ['123'] }
+const user = { admin: false, email: 'test@domain.de', name: 'Test' }
 
 const inviteRef = { update: jest.fn().mockName('inviteUpdate') }
 const householdRef = { update: jest.fn().mockName('householdUpdate') }
@@ -41,10 +41,19 @@ it('update invite, household and user when accepting invites', async function() 
 
   expect(inviteRef.update).toBeCalledWith({ used: true })
   expect(householdRef.update).toBeCalledWith({ users: ['1', '2'] })
-  expect(userRef.update).toBeCalledWith({ grantedUsers: ['123', '1'] })
+  expect(userRef.update).toBeCalledWith({ grantedUsers: ['1'], activeHousehold: '1' })
 })
 
 it('do not accept without authentication', async function() {
   const acceptInvite = test.wrap(requests.acceptInvite)
   await expect(acceptInvite({})).rejects.toThrowError('Not authenticated')
+})
+
+it('does not allow to use an already used invite', async function() {
+  invite.used = true
+  const acceptInvite = test.wrap(requests.acceptInvite)
+  await expect(acceptInvite({ inviteId: '1', uid: '2' }, { auth: { uid: '2' } })).rejects.toThrowError(
+    'Invite already used'
+  )
+  invite.used = false
 })
