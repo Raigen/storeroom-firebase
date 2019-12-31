@@ -132,6 +132,7 @@ export const Autosuggest: React.FC<AutoSuggestProps> = props => {
     <Downshift<Suggestion>
       id="downshift-simple"
       onChange={selectedItem => handleChange(selectedItem ? selectedItem.name : '')}
+      itemToString={item => item?.name || ''}
     >
       {({
         getInputProps,
