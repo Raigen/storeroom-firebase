@@ -18,10 +18,11 @@ const firebaseConfig = {
 
 app.initializeApp(firebaseConfig)
 
+const functions = app.app().functions('europe-west1')
+
 export const auth = app.auth()
 export const firestore = app.firestore()
 export const analytics = app.analytics()
-export const functions = app.functions()
 export const acceptInvite = functions.httpsCallable('acceptInvite')
 
 analytics.setAnalyticsCollectionEnabled(true)
