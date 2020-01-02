@@ -6,7 +6,7 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import { GoodList } from './goods/GoodList'
 import { HomeIntro } from './HomeIntro'
 import { HouseholdForm } from './household/HouseholdForm'
-import { InvitationList } from './invitations/InvitationList'
+import { InvitationList } from './Invitations/InvitationList'
 import { Navigation } from './Navigation'
 import React from 'react'
 import { Room } from './rooms/Room'
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-export const App = () => {
+export const App: React.FC = () => {
   const classes = useStyles()
   const [mobileOpen, setMobileOpen] = React.useState(false)
   const toggleDrawer = () => setMobileOpen(!mobileOpen)
