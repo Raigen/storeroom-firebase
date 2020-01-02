@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-export const App = () => {
+export const App: React.FC = () => {
   const classes = useStyles()
   const [mobileOpen, setMobileOpen] = React.useState(false)
   const toggleDrawer = () => setMobileOpen(!mobileOpen)

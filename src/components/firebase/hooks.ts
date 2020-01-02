@@ -1,10 +1,10 @@
+import { __RouterContext, useLocation } from 'react-router'
 import { analytics, auth, firestore } from './firebase'
 import { useCollectionData, useDocumentData } from 'react-firebase-hooks/firestore'
 
 import React from 'react'
 import { RoomType } from '../rooms/Room'
 import { SIGN_IN } from '../../constants/routes'
-import { __RouterContext } from 'react-router'
 
 type UserData = {
   admin: boolean
@@ -17,6 +17,7 @@ type UserData = {
 
 export function useFirebaseUser(): { userData: UserData | null; user: firebase.User | null } {
   const router = React.useContext(__RouterContext)
+  const location = useLocation()
   const [user, setUser] = React.useState<firebase.User | null>(null)
 
   const docRef = user ? firestore.doc(`users/${user.uid}`) : null
@@ -26,7 +27,7 @@ export function useFirebaseUser(): { userData: UserData | null; user: firebase.U
     const unregisterAuthObserver = auth.onAuthStateChanged(user => {
       setUser(user)
       if (!user) {
-        router.history.push(SIGN_IN)
+        router.history.push(SIGN_IN + location.search)
       } else {
         analytics.setUserId(user.uid)
       }
