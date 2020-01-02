@@ -9,7 +9,7 @@ import { Route } from 'react-router-dom'
 import { render } from '@testing-library/react'
 
 jest.mock('../firebase/hooks')
-jest.mock('../Invitations/PendingInvitation', () => ({
+jest.mock('../invitations/PendingInvitation', () => ({
   PendingInvitations: () => <div data-testid="invites" />
 }))
 

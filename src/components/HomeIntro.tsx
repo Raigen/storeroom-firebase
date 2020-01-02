@@ -2,7 +2,7 @@ import { Link, Redirect } from 'react-router-dom'
 import { NEW_HOUSEHOLD, ROOM } from '../constants/routes'
 
 import Button from '@material-ui/core/Button'
-import { PendingInvitations } from './Invitations/PendingInvitation'
+import { PendingInvitations } from './invitations/PendingInvitation'
 import React from 'react'
 import Typography from '@material-ui/core/Typography'
 import { useHousehold } from './firebase/hooks'
