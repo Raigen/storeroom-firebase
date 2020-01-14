@@ -3,9 +3,13 @@ on:
   push:
     paths:
       - 'src/**'
+      - 'package.json'
+      - 'yarn.lock'
   pull_request:
     paths:
       - 'src/**'
+      - 'package.json'
+      - 'yarn.lock'
 jobs:
   test:
     name: Test
