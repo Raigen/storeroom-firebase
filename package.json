@@ -45,7 +45,7 @@
     ]
   },
   "devDependencies": {
-    "@firebase/testing": "0.16.10",
+    "@firebase/testing": "0.16.11",
     "@testing-library/jest-dom": "5.1.1",
     "@testing-library/react": "9.4.0",
     "firebase-tools": "7.13.1",
