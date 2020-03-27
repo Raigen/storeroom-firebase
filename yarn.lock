@@ -2096,15 +2096,15 @@
     "@firebase/util" "0.2.43"
     tslib "1.11.1"
 
-"@firebase/testing@0.18.0":
-  version "0.18.0"
-  resolved "https://registry.yarnpkg.com/@firebase/testing/-/testing-0.18.0.tgz#ffa09060981fc1e681b7836ad1c348577e7e3032"
-  integrity sha512-I9C3QUXwetQKVrWy2bPs8SN/4RDfTPUwHC+JRH0PM5gE35ut6hR3VNNcDiesasVEFzEp25Qn/zROySfRENU30A==
+"@firebase/testing@0.18.1":
+  version "0.18.1"
+  resolved "https://registry.yarnpkg.com/@firebase/testing/-/testing-0.18.1.tgz#b693533bb4a83de010f86c23f554ca23aac1af61"
+  integrity sha512-qUO6Cw9cVyjigLM9+DaLjWkFuizLbxlIwg4P9uvjKvO7Ez6rKOLx+DJKN8mpc/EEBr26OFH8UuJmB66cdPX4HQ==
   dependencies:
     "@firebase/logger" "0.2.0"
     "@firebase/util" "0.2.43"
     "@types/request" "2.48.4"
-    firebase "7.13.0"
+    firebase "7.13.1"
     grpc "1.24.2"
     request "2.88.2"
 
@@ -6834,10 +6834,10 @@ firebase-tools@7.16.1:
     uuid "^3.0.0"
     winston "^1.0.1"
 
-firebase@7.13.0:
-  version "7.13.0"
-  resolved "https://registry.yarnpkg.com/firebase/-/firebase-7.13.0.tgz#8e1f29c2a029993a616360a0fb396d5b92a6c16e"
-  integrity sha512-XozrF4UJ4RJR0/d38SiCuCrE8E9P2kd7cQAP4ksEIXNgPexnA9P6+oJipa+tgBx9h9uwVexESsmXAv0ESt8OXA==
+firebase@7.13.1:
+  version "7.13.1"
+  resolved "https://registry.yarnpkg.com/firebase/-/firebase-7.13.1.tgz#f9c05ef60341cf8f7796ad7b8f3181b31be6dcf5"
+  integrity sha512-v4Z7Wioy/7LMC8RJn1jNlOaUqLK7bUEva+Uf+qrbtFd7hM2rWLW+0IqHZBwPrQ5tI604uHj7IlhqAZEjm38AMw==
   dependencies:
     "@firebase/analytics" "0.3.0"
     "@firebase/app" "0.6.0"
