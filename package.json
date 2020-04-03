@@ -51,6 +51,6 @@
     "firebase-tools": "8.0.1",
     "jest": "24.9.0",
     "prettier": "2.0.2",
-    "ts-jest": "25.3.0"
+    "ts-jest": "25.3.1"
   }
 }
