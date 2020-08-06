@@ -20,7 +20,7 @@
     "firebase-functions": "3.3.0"
   },
   "devDependencies": {
-    "@types/jest": "26.0.8",
+    "@types/jest": "26.0.9",
     "firebase-functions-test": "0.2.1",
     "jest": "24.9.0",
     "ts-jest": "26.1.4",
