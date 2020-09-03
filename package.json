@@ -48,7 +48,7 @@
     "@firebase/testing": "0.20.11",
     "@testing-library/jest-dom": "5.11.4",
     "@testing-library/react": "9.5.0",
-    "firebase-tools": "8.9.2",
+    "firebase-tools": "8.10.0",
     "jest": "24.9.0",
     "prettier": "2.1.1",
     "ts-jest": "26.3.0"
