@@ -10,7 +10,7 @@
     "@types/react": "16.9.51",
     "@types/react-dom": "16.9.8",
     "@types/react-router": "5.1.8",
-    "@types/react-router-dom": "5.1.5",
+    "@types/react-router-dom": "5.1.6",
     "downshift": "4.0.8",
     "firebase": "7.7.0",
     "react": "16.12.0",
