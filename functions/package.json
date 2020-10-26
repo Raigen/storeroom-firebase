@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "@types/jest": "26.0.15",
-    "firebase-functions-test": "0.2.2",
+    "firebase-functions-test": "0.2.3",
     "jest": "24.9.0",
     "ts-jest": "26.4.3",
     "tslint": "6.1.3",
