@@ -73,7 +73,7 @@ jobs:
         with:
           node-version: 10.x
       - run: yarn install
-      - uses: paambaati/codeclimate-action@v2.3.0
+      - uses: paambaati/codeclimate-action@v2.7.4
         env:
           CI: 'true'
           CC_TEST_REPORTER_ID: d6c611fcd44745df6fe0f00ccdc109e4225c4c86ec63e8f47b6a7207df78f374
